@@ -1,12 +1,12 @@
 package com.android.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GdxGame extends ApplicationAdapter {
+public class GdxGame implements ApplicationListener {
 	SpriteBatch batch;
 	Texture img;
 	
@@ -23,5 +23,33 @@ public class GdxGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
+	}
+
+	@Override
+	public void dispose() {
+		// Called when game is closed
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pause() {
+		// Called when game is paused
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// Called when window is resized
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resume() {
+		// Called when game is resumed from pause
+		// TODO Auto-generated method stub
+
 	}
 }
