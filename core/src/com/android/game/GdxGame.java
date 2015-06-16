@@ -12,6 +12,7 @@ public class GdxGame implements ApplicationListener {
 	
 	@Override
 	public void create () {
+		//TODO Load all assets to be used
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
@@ -21,8 +22,11 @@ public class GdxGame implements ApplicationListener {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
+		//TODO Render all visible objects
 		batch.draw(img, 0, 0);
 		batch.end();
+
+		//TODO Update game logic
 	}
 
 	@Override
