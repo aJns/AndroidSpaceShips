@@ -9,12 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GdxGame implements ApplicationListener {
 	SpriteBatch batch;
 	Texture img;
+	GameLogic logic;
 	
 	@Override
 	public void create () {
 		//TODO Load all assets to be used
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
+		//starting up the gamelogick
+		logic = new GameLogic();
+		logic.init();
 	}
 
 	@Override
@@ -26,7 +31,7 @@ public class GdxGame implements ApplicationListener {
 		batch.draw(img, 0, 0);
 		batch.end();
 
-		//TODO Update game logic
+		logic.update();
 	}
 
 	@Override
