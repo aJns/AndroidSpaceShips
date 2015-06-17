@@ -2,6 +2,7 @@ package com.android.game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,13 +11,15 @@ public class GdxGame implements ApplicationListener {
 	SpriteBatch batch;
 	Texture img;
 	GameLogic logic;
+	AssetManager assMan;
 	
 	@Override
 	public void create () {
 		//TODO Load all assets to be used
+		assMan = new AssetManager();
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 
+		assMan.load("img/spaceship.jpg", Texture.class);
 		//starting up the gamelogick
 		logic = new GameLogic();
 		logic.init();
@@ -24,11 +27,16 @@ public class GdxGame implements ApplicationListener {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		if(assMan.update()) {
+			img = assMan.get("img/spaceship.jpg", Texture.class);
+		} else {
+			return;
+		}
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		//TODO Render all visible objects
-		batch.draw(img, 0, 0);
+		batch.draw(img, 200, 200);
 		batch.end();
 
 		logic.update();
