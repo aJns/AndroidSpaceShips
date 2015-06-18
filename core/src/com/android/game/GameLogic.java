@@ -8,6 +8,7 @@ public class GameLogic {
 	ArrayList<Updateable> updateableObjects;
 	public GameLogic(ArrayList<Drawable> visibleObjects) {
 		this.visibleObjects = visibleObjects;
+		this.updateableObjects = new ArrayList<Updateable>();
 	}
 	
 	public void init() {
