@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SpaceShip extends GameObject implements Drawable {
+public class SpaceShip extends GameObject implements Drawable, Updateable {
 	String imgPath = "img/spaceship.jpg";
 	Texture img;
 	int xPos = 200;
@@ -16,5 +16,11 @@ public class SpaceShip extends GameObject implements Drawable {
 			img = assMan.get(imgPath);
 			batch.draw(img, xPos, yPos);
 		}
+	}
+
+	@Override
+	public void update() {
+		xPos++;
+		yPos++;
 	}
 }
