@@ -1,5 +1,7 @@
 package com.android.game;
 
-public class Player {
+import java.util.ArrayList;
 
+public class Player {
+	ArrayList<SpaceShip> ships;
 }
