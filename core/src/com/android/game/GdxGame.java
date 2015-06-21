@@ -16,6 +16,9 @@ public class GdxGame implements ApplicationListener {
 	AssetManager assMan;
 	ArrayList<Drawable> visibleObjects;
 	GameState gameState;
+	ArtificialIntelligence ai;
+	Player player;
+	InputHandler input;
 	
 	@Override
 	public void create () {
@@ -24,10 +27,13 @@ public class GdxGame implements ApplicationListener {
 		batch = new SpriteBatch();
 		visibleObjects = new ArrayList<Drawable>();
 		gameState = new GameState();
+		player = new Player();
+		ai = new ArtificialIntelligence();
+		input = new InputHandler(player);
 
 		assMan.load("img/spaceship.jpg", Texture.class);
 		//starting up the gamelogick
-		logic = new GameLogic(visibleObjects);
+		logic = new GameLogic(visibleObjects, gameState, player, ai);
 		logic.init();
 	}
 
