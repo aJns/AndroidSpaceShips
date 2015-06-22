@@ -9,9 +9,14 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
 	String imgPath = "img/spaceship.jpg";
 	Texture img;
     float speed = 1;
-	Vector2 position = new Vector2(200, 200);
+	Vector2 position;
     Vector2 velocity = Vector2.Zero;
-    Vector2 destination = new Vector2(400, 150);
+    Vector2 destination;
+
+    public SpaceShip(Vector2 position) {
+        this.position = position;
+        this.destination = this.position;
+    }
 
 	@Override
 	public void draw(SpriteBatch batch, AssetManager assMan) {

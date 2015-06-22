@@ -20,9 +20,10 @@ public class GameLogic {
 	}
 	
 	public void init() {
-		SpaceShip ship = new SpaceShip();
-		visibleObjects.add(ship);
-		updateableObjects.add(ship);
+        for(SpaceShip s : player.getShips()) {
+            visibleObjects.add(s);
+            updateableObjects.add(s);
+        }
 		gameState.plan();
 	}
 
