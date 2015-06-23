@@ -1,6 +1,7 @@
 package com.android.game;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.Map;
 
 public class GdxGame implements ApplicationListener {
 	SpriteBatch batch;
@@ -19,6 +21,7 @@ public class GdxGame implements ApplicationListener {
 	ArtificialIntelligence ai;
 	Player player;
 	InputHandler input;
+	TreeMap<String, String> assetMap;
 	
 	@Override
 	public void create () {
@@ -27,12 +30,17 @@ public class GdxGame implements ApplicationListener {
 		batch = new SpriteBatch();
 		visibleObjects = new ArrayList<Drawable>();
 		gameState = new GameState();
-		player = new Player();
 		ai = new ArtificialIntelligence();
 		input = new InputHandler(player);
 
-		assMan.load("img/spaceship.jpg", Texture.class);
+		// Save all asset paths in a map 
+		assetMap = new TreeMap<String, String>();
+		assetMap.put("spaceship", "img/spaceship.png");
+
+		// assMan.load moved to SpaceShip constructor
+		
 		//starting up the gamelogick
+		player = new Player(assetMap, assMan);
 		logic = new GameLogic(visibleObjects, gameState, player, ai);
 		logic.init();
 	}

@@ -1,21 +1,28 @@
 package com.android.game;
 
+import java.util.TreeMap;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable {
-	String imgPath = "img/spaceship.jpg";
+	String imgPath = "spaceship";
 	Texture img;
     float speed = 1;
 	Vector2 position;
     Vector2 velocity = Vector2.Zero;
     Vector2 destination;
 
-    public SpaceShip(Vector2 position) {
+    public SpaceShip(Vector2 position, TreeMap<String, String> assetMap, 
+	    AssetManager assMan) {
         this.position = position;
         this.destination = this.position;
+
+	// Use assetMap sensibly. I was lazy and just wanted to test it.
+	imgPath = assetMap.get(imgPath);
+	assMan.load(imgPath, Texture.class);
     }
 
 	@Override
