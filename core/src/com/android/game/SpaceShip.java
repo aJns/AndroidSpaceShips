@@ -5,26 +5,34 @@ import java.util.TreeMap;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable {
     String imgPath = "spaceship";
+    Sprite sprite;
     Texture img;
     float speed = 1;
     Vector2 position;
     float rotation = 0;
     Vector2 velocity = Vector2.Zero;
     Vector2 destination;
+    AssetManager assMan;
 
     public SpaceShip(Vector2 position, TreeMap<String, String> assetMap,
-                     AssetManager assMan) {
+            AssetManager assMan) {
         this.position = position;
         this.destination = this.position;
 
-        // Use assetMap sensibly. I was lazy and just wanted to test it.
         imgPath = assetMap.get(imgPath);
         assMan.load(imgPath, Texture.class);
+        while (!assMan.update());
+        img = assMan.get(imgPath);
+        sprite = new Sprite(img);
+        sprite.setCenter(sprite.getWidth()/2, sprite.getHeight()/2);
+        sprite.setOriginCenter();
+        this.assMan = assMan;
     }
 
     public void setSpeed(float speed) {
@@ -36,16 +44,11 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
     }
 
     @Override
-    public void draw(SpriteBatch batch, AssetManager assMan) {
-        if (assMan.update()) {
-            img = assMan.get(imgPath);
-            float scale = 0.5f;
-            // Spaceship in image should be facing right
-            batch.draw(img, position.x, position.y,
-                    img.getWidth() / 2, img.getHeight() / 2,
-                    img.getWidth(), img.getHeight(), scale, scale, rotation,
-                    0, 0, img.getWidth(), img.getHeight(), false, false);
-        }
+    public void draw(SpriteBatch batch) {
+        float scale = 0.5f;
+        sprite.setRotation(rotation);
+        sprite.setScale(scale);
+        sprite.draw(batch);
     }
 
     @Override
@@ -58,7 +61,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         } else {
             Random rand = new Random();
             Vector2 randVec
-                    = new Vector2(rand.nextInt(400), rand.nextInt(200));
+                = new Vector2(rand.nextInt(400), rand.nextInt(200));
             setDestination(randVec);
         }
 

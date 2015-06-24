@@ -9,7 +9,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.Map;
 
 public class GdxGame implements ApplicationListener {
     SpriteBatch batch;
@@ -52,7 +51,7 @@ public class GdxGame implements ApplicationListener {
         batch.begin();
         //TODO Render all visible objects
         for (Drawable object : visibleObjects) {
-            object.draw(batch, assMan);
+            object.draw(batch);
         }
         batch.end();
 

@@ -11,7 +11,7 @@ public class GameLogic {
     GameState gameState;
 
     public GameLogic(ArrayList<Drawable> visibleObjects, GameState state,
-                     Player player, ArtificialIntelligence ai) {
+            Player player, ArtificialIntelligence ai) {
         this.visibleObjects = visibleObjects;
         this.updateableObjects = new ArrayList<Updateable>();
         this.gameState = state;
