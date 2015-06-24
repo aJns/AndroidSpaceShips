@@ -1,5 +1,6 @@
 package com.android.game;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -7,6 +8,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable {
@@ -15,10 +17,12 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
     Texture img;
     AssetManager assMan;
 
-    float speed = 5;
+    float speed = 2;
     float rotation = 0;
     Vector2 position;
     Vector2 destination;
+
+    ArrayList<Wave> waves = new ArrayList<Wave>();
 
     public SpaceShip(Vector2 position, TreeMap<String, String> assetMap,
                      AssetManager assMan) {
@@ -41,6 +45,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
 
     public void setDestination(Vector2 destination) {
         this.destination = destination;
+        waves.add(new Wave(position, 500));
     }
 
     @Override
@@ -53,6 +58,13 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
     }
 
     @Override
+    public void draw(ShapeRenderer renderer) {
+        for (Wave w : waves) {
+            w.draw(renderer);
+        }
+    }
+
+    @Override
     public void update() {
         if (position.epsilonEquals(destination, 0.5f)) {
             randomizeDestination(320, 240);
@@ -61,6 +73,10 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
             rotation = v.angle();
             v.scl(Math.min(speed, position.dst(destination)));
             position.add(v);
+        }
+
+        for (Wave w : waves) {
+            w.update();
         }
     }
 
