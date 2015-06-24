@@ -34,7 +34,6 @@ public class GdxGame implements ApplicationListener {
         renderer = new ShapeRenderer();
         visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
-        ai = new ArtificialIntelligence();
 
         // Save all asset paths in a map
         assetMap = new TreeMap<String, String>();
@@ -44,6 +43,7 @@ public class GdxGame implements ApplicationListener {
 
         //starting up the gamelogick
         player = new Player(assetMap, assMan);
+        ai = new ArtificialIntelligence(assetMap, assMan);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
         logic.init();
 

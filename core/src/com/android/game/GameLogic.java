@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class GameLogic {
     //TODO member variables
+    ArrayList<GameObject> gameObjects;
     ArrayList<Drawable> visibleObjects;
     ArrayList<Updateable> updateableObjects;
     Player player;
@@ -12,6 +13,7 @@ public class GameLogic {
 
     public GameLogic(ArrayList<Drawable> visibleObjects, GameState state,
             Player player, ArtificialIntelligence ai) {
+        this.gameObjects = new ArrayList<GameObject>();
         this.visibleObjects = visibleObjects;
         this.updateableObjects = new ArrayList<Updateable>();
         this.gameState = state;
@@ -21,6 +23,12 @@ public class GameLogic {
 
     public void init() {
         for (SpaceShip s : player.getShips()) {
+            gameObjects.add(s);
+            visibleObjects.add(s);
+            updateableObjects.add(s);
+        }
+        for (SpaceShip s : ai.getShips()) {
+            gameObjects.add(s);
             visibleObjects.add(s);
             updateableObjects.add(s);
         }
@@ -28,9 +36,11 @@ public class GameLogic {
     }
 
     public void update() {
+        for (GameObject go : gameObjects) {
+            go.checkWaves(gameObjects);
+        }
         for (Updateable u : updateableObjects) {
             u.update();
         }
     }
 }
-

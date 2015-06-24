@@ -6,14 +6,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class Wave extends GameObject implements Drawable, Updateable {
-    Vector2 position;
-    float radius = 0;
-    float speed = 5;
+    float radius;
+    float speed;
     float maxRadius;
+    boolean reflective;
 
-    public Wave(Vector2 position, float maxRadius) {
-        this.position = position.cpy();
+    public Wave(Vector2 position, float radius, float maxRadius, boolean reflective) {
+        super.position = position.cpy();
+        this.radius = radius;
         this.maxRadius = maxRadius;
+        this.reflective = reflective;
+        speed = 5;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
     public void draw(ShapeRenderer renderer) {
         renderer.begin(ShapeRenderer.ShapeType.Line);
         renderer.setColor(Color.BLACK);
-        renderer.circle(position.x, position.y, radius);
+        renderer.circle(super.position.x, super.position.y, radius);
         renderer.end();
     }
 
@@ -40,5 +43,17 @@ public class Wave extends GameObject implements Drawable, Updateable {
         } else {
             return false;
         }
+    }
+
+    public float getRadius() {
+        return  radius;
+    }
+
+    public boolean getReflective() {
+        return reflective;
+    }
+
+    public float getMaxRadius() {
+        return maxRadius;
     }
 }
