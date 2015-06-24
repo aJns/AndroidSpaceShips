@@ -1,12 +1,17 @@
 package com.android.game;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.Ray;
 
 public class InputHandler implements InputProcessor {
     Player player;
+    OrthographicCamera camera;
 
-    public InputHandler(Player player) {
+    public InputHandler(Player player, OrthographicCamera camera) {
         this.player = player;
+        this.camera = camera;
     }
 
     @Override
@@ -29,8 +34,11 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // TODO Auto-generated method stub
-        return false;
+        Ray ray = camera.getPickRay(screenX, screenY);
+        Vector2 position = new Vector2(ray.origin.x, ray.origin.y);
+        player.input(position);
+
+        return true;
     }
 
     @Override
