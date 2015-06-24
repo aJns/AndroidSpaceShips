@@ -7,6 +7,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -21,6 +22,7 @@ public class GdxGame implements ApplicationListener {
     Player player;
     InputHandler input;
     TreeMap<String, String> assetMap;
+    OrthographicCamera camera;
 
     @Override
     public void create() {
@@ -42,10 +44,19 @@ public class GdxGame implements ApplicationListener {
         player = new Player(assetMap, assMan);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
         logic.init();
+
+
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        camera = new OrthographicCamera(w, h);
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.update();
     }
 
     @Override
     public void render() {
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -74,9 +85,9 @@ public class GdxGame implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        // Called when window is resized
-        // TODO Auto-generated method stub
-
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
+        camera.update();
     }
 
     @Override
