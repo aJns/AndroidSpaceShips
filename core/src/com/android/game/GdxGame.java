@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GdxGame implements ApplicationListener {
     SpriteBatch batch;
+    ShapeRenderer renderer;
     Texture img;
     GameLogic logic;
     AssetManager assMan;
@@ -29,6 +31,7 @@ public class GdxGame implements ApplicationListener {
         //TODO Load all assets to be used
         assMan = new AssetManager();
         batch = new SpriteBatch();
+        renderer = new ShapeRenderer();
         visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
         ai = new ArtificialIntelligence();
@@ -58,15 +61,21 @@ public class GdxGame implements ApplicationListener {
     @Override
     public void render() {
         camera.update();
-        batch.setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //TODO Render all visible objects
         for (Drawable object : visibleObjects) {
             object.draw(batch);
         }
         batch.end();
+
+        renderer.setProjectionMatrix(camera.combined);
+        for (Drawable object : visibleObjects) {
+            object.draw(renderer);
+        }
 
         logic.update();
     }
