@@ -35,7 +35,6 @@ public class GdxGame implements ApplicationListener {
         visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
         ai = new ArtificialIntelligence();
-        input = new InputHandler(player);
 
         // Save all asset paths in a map
         assetMap = new TreeMap<String, String>();
@@ -54,6 +53,9 @@ public class GdxGame implements ApplicationListener {
         camera = new OrthographicCamera(w, h);
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
+
+        input = new InputHandler(player, camera);
+        Gdx.input.setInputProcessor(input);
     }
 
     @Override
