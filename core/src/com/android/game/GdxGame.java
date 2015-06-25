@@ -51,8 +51,7 @@ public class GdxGame implements ApplicationListener {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
+        camera.setToOrtho(true);
 
         input = new InputHandler(player, camera);
         Gdx.input.setInputProcessor(input);
@@ -61,10 +60,10 @@ public class GdxGame implements ApplicationListener {
     @Override
     public void render() {
         camera.update();
+        batch.setProjectionMatrix(camera.combined);
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //TODO Render all visible objects
         for (Drawable object : visibleObjects) {
@@ -96,9 +95,9 @@ public class GdxGame implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
+        camera.setToOrtho(true);
         camera.viewportWidth = width;
         camera.viewportHeight = height;
-        camera.update();
     }
 
     @Override

@@ -34,8 +34,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         while (!assMan.update()) ;
         img = assMan.get(imgPath);
         sprite = new Sprite(img);
-        sprite.setCenter(sprite.getWidth() / 2, sprite.getHeight() / 2);
-        sprite.setOriginCenter();
         this.assMan = assMan;
     }
 
@@ -53,7 +51,9 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         float scale = 0.25f;
         sprite.setRotation(rotation);
         sprite.setScale(scale);
-        sprite.setPosition(position.x, position.y);
+		float drawY = position.y - (sprite.getHeight() / 2);
+		float drawX = position.x - (sprite.getWidth() / 2);
+        sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
     }
 
@@ -67,7 +67,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
     @Override
     public void update() {
         if (position.epsilonEquals(destination, 0.5f)) {
-            randomizeDestination(320, 240);
+            // randomizeDestination(320, 240);
         } else {
             Vector2 v = destination.cpy().sub(position).nor();
             rotation = v.angle();
