@@ -110,20 +110,10 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         if (commands.isEmpty()) { return false; }
         int commandIndex = 0;
         Command command = commands.get(commandIndex);
-
-        if (command.type == Command.CommandType.MOVE) {
-            if (command.newCommand) {
-                addWave(super.position, 0, 500, true);
-                command.setOld();
-            }
-
-            Vector2 destination = command.commandCoordinates();
-            if (super.position.epsilonEquals(destination, 0.5f)) {
-                commands.remove(commandIndex);
-            } else {
-                this.move(command.commandCoordinates());
-            }
+        if (command.executeCommand(this)) {
+            commands.remove(commandIndex);
         }
+
         return true;
     }
 

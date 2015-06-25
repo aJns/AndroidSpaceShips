@@ -23,7 +23,21 @@ public class Command {
 
 	public void setOld() { newCommand = false; };
 
+	// returns true if command was finished
 	public boolean executeCommand(Controllable subject) {
+		if (this.type == CommandType.MOVE) {
+			if (this.newCommand) {
+				subject.addWave(subject.getPosition(), 0, 500, true);
+				this.setOld();
+			}
+
+			Vector2 destination = this.commandCoordinates();
+			if (subject.getPosition().epsilonEquals(destination, 0.5f)) {
+				return true;
+			} else {
+				subject.move(this.commandCoordinates());
+			}
+		}
 		return false;
 	}
 }
