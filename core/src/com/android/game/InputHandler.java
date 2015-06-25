@@ -34,9 +34,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector3 screenPos = new Vector3(screenX, screenY, 0);
-        Vector3 realPos = camera.unproject(screenPos);
-        Vector2 position = new Vector2(realPos.x, realPos.y);
+        Vector2 position = new Vector2(screenX, screenY);
         player.input(position);
 
         return true;
