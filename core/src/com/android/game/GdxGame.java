@@ -29,7 +29,6 @@ public class GdxGame implements ApplicationListener {
 
     @Override
     public void create() {
-        //TODO Load all assets to be used
         assMan = new AssetManager();
         batch = new SpriteBatch();
         renderer = new ShapeRenderer();
@@ -39,8 +38,6 @@ public class GdxGame implements ApplicationListener {
         // Save all asset paths in a map
         assetMap = new TreeMap<String, String>();
         assetMap.put("spaceship", "img/spaceship.png");
-
-        // assMan.load moved to SpaceShip constructor
 
         //starting up the gamelogick
         player = new Player(assetMap, assMan);
