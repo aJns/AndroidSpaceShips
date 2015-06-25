@@ -22,8 +22,9 @@ public class Player {
     }
 
     public void input(Vector2 pos) {
+        Command command = new Command(Command.CommandType.MOVE, pos);
         for (SpaceShip s : ships) {
-            s.setDestination(pos);
+            s.addCommand(command);
         }
     }
 }

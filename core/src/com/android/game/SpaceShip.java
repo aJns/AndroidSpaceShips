@@ -1,5 +1,6 @@
 package com.android.game;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
@@ -11,34 +12,35 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-public class SpaceShip extends GameObject implements Drawable, Updateable {
-    String imgPath = "spaceship";
+public class SpaceShip extends GameObject implements Drawable, Updateable, Controllable {
+    String imgID = "spaceship";
     Sprite sprite;
     Texture img;
     AssetManager assMan;
 
     float speed;
     float rotation;
-    Vector2 destination;
+
+    ArrayList<Command> commands;
 
     public SpaceShip(Vector2 position, TreeMap<String, String> assetMap,
-                     AssetManager assMan) {
+            AssetManager assMan) {
         super();
         super.position = position;
-        this.destination = super.position;
         speed = 2;
         rotation = 0;
 
-        imgPath = assetMap.get(imgPath);
-        assMan.load(imgPath, Texture.class);
+        imgID = assetMap.get(imgID);
+        assMan.load(imgID, Texture.class);
         while (!assMan.update()) ;
-        img = assMan.get(imgPath);
+        img = assMan.get(imgID);
         sprite = new Sprite(img);
         this.assMan = assMan;
+
+        commands = new ArrayList<Command>();
     }
 
     public void setDestination(Vector2 destination) {
-        this.destination = destination;
         addWave(super.position, 0, 500, true);
     }
 
@@ -47,8 +49,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         float scale = 0.25f;
         sprite.setRotation(rotation);
         sprite.setScale(scale);
-		float drawY = super.position.y - (sprite.getHeight() / 2);
-		float drawX = super.position.x - (sprite.getWidth() / 2);
+        float drawY = super.position.y - (sprite.getHeight() / 2);
+        float drawX = super.position.x - (sprite.getWidth() / 2);
         sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
     }
@@ -62,14 +64,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
 
     @Override
     public void update() {
-        if (super.position.epsilonEquals(destination, 0.5f)) {
-            // randomizeDestination(320, 240);
-        } else {
-            Vector2 v = destination.cpy().sub(super.position).nor();
-            rotation = v.angle();
-            v.scl(Math.min(speed, super.position.dst(destination)));
-            super.position.add(v);
-        }
+        parseCommands();
 
         for (Wave w : super.waves) {
             w.update();
@@ -87,5 +82,58 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         Vector2 randVec = new Vector2(rand.nextInt(2 * xMax) - xMax,
                 rand.nextInt(2 * yMax) - yMax);
         setDestination(randVec);
+    }
+
+    @Override
+    public boolean ping() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean move(Vector2 destination) {
+        Vector2 v = destination.cpy().sub(super.position).nor();
+        rotation = v.angle();
+        v.scl(Math.min(speed, super.position.dst(destination)));
+        super.position.add(v);
+        return true;
+    }
+
+    @Override
+    public boolean attack() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean parseCommands() {
+        if (commands.isEmpty()) { return false; }
+        int commandIndex = 0;
+        Command command = commands.get(commandIndex);
+
+        if (command.type == Command.CommandType.MOVE) {
+            if (command.newCommand) {
+                addWave(super.position, 0, 500, true);
+                command.setOld();
+            }
+
+            Vector2 destination = command.commandCoordinates();
+            if (super.position.epsilonEquals(destination, 0.5f)) {
+                commands.remove(commandIndex);
+            } else {
+                this.move(command.commandCoordinates());
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void addCommand(Command command) {
+        commands.add(command);
+    }
+
+    @Override
+    public void removeLastCommand() {
+        commands.remove(commands.size() - 1);
     }
 }
