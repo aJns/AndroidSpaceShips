@@ -31,7 +31,9 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
         imgID = assetMap.get(imgID);
         assMan.load(imgID, Texture.class);
-        while (!assMan.update()) ;
+        while (!assMan.isLoaded(imgID)) {
+            assMan.update();
+        }
         img = assMan.get(imgID);
         sprite = new Sprite(img);
 
