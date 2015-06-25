@@ -16,7 +16,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
         this.radius = radius;
         this.maxRadius = maxRadius;
         this.reflective = reflective;
-        speed = 5;
+        speed = Utils.LIGHT_SPEED;
     }
 
     @Override
@@ -35,14 +35,6 @@ public class Wave extends GameObject implements Drawable, Updateable {
     @Override
     public void update() {
         radius += Math.min(speed, maxRadius - radius);
-    }
-
-    public boolean hasMaxRadius() {
-        if (radius >= maxRadius) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public float getRadius() {

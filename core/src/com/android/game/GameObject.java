@@ -17,7 +17,7 @@ public class GameObject {
         for (GameObject go : gameObjects) {
             if (!go.equals(this)) {
                 for (Wave w : go.getWaves()) {
-                    if (w.getReflective() && MathUtils.isEqual(w.getRadius(), position.dst(w.getPosition()) + 5, 5)) {
+                    if (w.getReflective() && MathUtils.isEqual(w.getRadius(), position.dst(w.getPosition()) + Utils.LIGHT_SPEED, Utils.LIGHT_SPEED)) {
                         addWave(position, w.getRadius() - position.dst(w.getPosition()), w.getMaxRadius(), false);
                     }
                 }
