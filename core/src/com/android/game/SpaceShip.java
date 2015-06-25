@@ -71,7 +71,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         }
         for (Iterator<Wave> iterator = super.waves.iterator(); iterator.hasNext(); ) {
             Wave wave = iterator.next();
-            if (wave.hasMaxRadius()) {
+            if (wave.getRadius() >= wave.getMaxRadius()) {
                 iterator.remove();
             }
         }
@@ -86,8 +86,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean ping() {
-        // TODO Auto-generated method stub
-        return false;
+        addWave(super.position, 0, 1000, true);
+        return true;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
         if (command.type == Command.CommandType.MOVE) {
             if (command.newCommand) {
-                addWave(super.position, 0, 500, true);
+                addWave(super.position, 0, 500, false);
                 command.setOld();
             }
 
