@@ -27,7 +27,7 @@ public class Command {
 	public boolean executeCommand(Controllable subject) {
 		if (this.type == CommandType.MOVE) {
 			if (this.newCommand) {
-				subject.addWave(subject.getPosition(), 0, 500, true);
+				subject.addWave(subject.getPosition(), 0, 500, false);
 				this.setOld();
 			}
 

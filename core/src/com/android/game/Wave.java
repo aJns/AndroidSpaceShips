@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class Wave extends GameObject implements Drawable, Updateable {
-    float radius;
-    float speed;
-    float maxRadius;
-    boolean reflective;
+    private float radius;
+    private float speed;
+    private float maxRadius;
+    private boolean reflective;
 
     public Wave(Vector2 position, float radius, float maxRadius, boolean reflective) {
         super.position = position.cpy();
@@ -27,7 +27,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
     @Override
     public void draw(ShapeRenderer renderer) {
         renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.setColor(Color.BLACK);
+        renderer.setColor(Color.WHITE);
         renderer.circle(super.position.x, super.position.y, radius);
         renderer.end();
     }

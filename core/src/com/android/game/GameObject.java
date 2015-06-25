@@ -8,17 +8,23 @@ import java.util.ArrayList;
 public class GameObject {
     protected Vector2 position;
     protected ArrayList<Wave> waves;
+    private float waveSpeed;
 
     public GameObject() {
         waves = new ArrayList<Wave>();
+        waveSpeed = Utils.LIGHT_SPEED;
     }
 
     public void checkWaves(ArrayList<GameObject> gameObjects) {
         for (GameObject go : gameObjects) {
             if (!go.equals(this)) {
                 for (Wave w : go.getWaves()) {
-                    if (w.getReflective() && MathUtils.isEqual(w.getRadius(), position.dst(w.getPosition()) + Utils.LIGHT_SPEED, Utils.LIGHT_SPEED)) {
-                        addWave(position, w.getRadius() - position.dst(w.getPosition()), w.getMaxRadius(), false);
+                    if (w.getReflective() && MathUtils.isEqual(w.getRadius(),
+                            position.dst(w.getPosition()) + waveSpeed / 2f,
+                            waveSpeed / 2f)) {
+                        addWave(position,
+                                w.getRadius() - position.dst(w.getPosition()),
+                                w.getMaxRadius(), false);
                     }
                 }
             }

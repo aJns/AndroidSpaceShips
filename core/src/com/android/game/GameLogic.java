@@ -37,6 +37,9 @@ public class GameLogic {
 
     public void update() {
         for (GameObject go : gameObjects) {
+            for (Wave w : go.getWaves()) {
+                w.update();
+            }
             go.checkWaves(gameObjects);
         }
         for (Updateable u : updateableObjects) {

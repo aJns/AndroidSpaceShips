@@ -1,5 +1,6 @@
 package com.android.game;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -62,7 +63,7 @@ public class GdxGame implements ApplicationListener {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 112 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         //TODO Render all visible objects

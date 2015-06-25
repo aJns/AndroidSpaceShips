@@ -13,15 +13,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable, Controllable {
-    String imgID = "spaceship";
-    Sprite sprite;
-    Texture img;
-    AssetManager assMan;
+    private String imgID = "spaceship";
+    private Sprite sprite;
+    private Texture img;
 
-    float speed;
-    float rotation;
+    private float speed;
+    private float rotation;
 
-    ArrayList<Command> commands;
+    private ArrayList<Command> commands;
 
     public SpaceShip(Vector2 position, TreeMap<String, String> assetMap,
             AssetManager assMan) {
@@ -35,13 +34,12 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         while (!assMan.update()) ;
         img = assMan.get(imgID);
         sprite = new Sprite(img);
-        this.assMan = assMan;
 
         commands = new ArrayList<Command>();
     }
 
     public void setDestination(Vector2 destination) {
-        addWave(super.position, 0, 500, true);
+        addWave(getPosition(), 0, 500, true);
     }
 
     @Override
@@ -49,8 +47,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         float scale = 0.25f;
         sprite.setRotation(rotation);
         sprite.setScale(scale);
-        float drawY = super.position.y - (sprite.getHeight() / 2);
-        float drawX = super.position.x - (sprite.getWidth() / 2);
+        float drawY = getPosition().y - (sprite.getHeight() / 2);
+        float drawX = getPosition().x - (sprite.getWidth() / 2);
         sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
     }
@@ -66,9 +64,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     public void update() {
         parseCommands();
 
-        for (Wave w : super.waves) {
-            w.update();
-        }
         for (Iterator<Wave> iterator = super.waves.iterator(); iterator.hasNext(); ) {
             Wave wave = iterator.next();
             if (wave.getRadius() >= wave.getMaxRadius()) {
@@ -86,16 +81,16 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean ping() {
-        addWave(super.position, 0, 1000, true);
+        addWave(getPosition(), 0, 1000, true);
         return true;
     }
 
     @Override
     public boolean move(Vector2 destination) {
-        Vector2 v = destination.cpy().sub(super.position).nor();
+        Vector2 v = destination.cpy().sub(getPosition()).nor();
         rotation = v.angle();
-        v.scl(Math.min(speed, super.position.dst(destination)));
-        super.position.add(v);
+        v.scl(Math.min(speed, getPosition().dst(destination)));
+        getPosition().add(v);
         return true;
     }
 
