@@ -1,6 +1,7 @@
 package com.android.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -43,7 +44,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
 
     public void setDestination(Vector2 destination) {
         this.destination = destination;
-        waves.add(new Wave(position, 500));
+        addWave();
     }
 
     @Override
@@ -78,6 +79,12 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         for (Wave w : waves) {
             w.update();
         }
+        for (Iterator<Wave> iterator = waves.iterator(); iterator.hasNext(); ) {
+            Wave wave = iterator.next();
+            if (wave.hasMaxRadius()) {
+                iterator.remove();
+            }
+        }
     }
 
     void randomizeDestination(int xMax, int yMax) {
@@ -85,5 +92,9 @@ public class SpaceShip extends GameObject implements Drawable, Updateable {
         Vector2 randVec = new Vector2(rand.nextInt(2 * xMax) - xMax,
                 rand.nextInt(2 * yMax) - yMax);
         setDestination(randVec);
+    }
+
+    public void addWave() {
+        waves.add(new Wave(position, 500));
     }
 }
