@@ -9,20 +9,25 @@ public class Wave extends GameObject implements Drawable, Updateable {
     private float direction;
     private float angle;
     private float radius;
-    private float speed;
     private float maxRadius;
     private boolean reflective;
-    private float curveRes = 10f;
+    private float speed;
+    private float segLength;
 
-    public Wave(Vector2 position, float radius, float maxRadius, boolean reflective) {
+    // Circular wave
+    public Wave(Vector2 position, float radius, float maxRadius,
+                boolean reflective) {
         super.position = position.cpy();
         this.radius = radius;
         this.maxRadius = maxRadius;
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
+        segLength = 10f;
     }
 
-    public Wave(Vector2 position, float direction, float angle, float radius, float maxRadius, boolean reflective) {
+    // Arc wave
+    public Wave(Vector2 position, float direction, float angle, float radius,
+                float maxRadius, boolean reflective) {
         super.position = position.cpy();
         this.direction = direction;
         this.angle = angle;
@@ -30,6 +35,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
         this.maxRadius = maxRadius;
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
+        segLength = 10f;
     }
 
     @Override
@@ -39,15 +45,22 @@ public class Wave extends GameObject implements Drawable, Updateable {
 
     @Override
     public void draw(ShapeRenderer renderer) {
+        if (radius == 0f) {
+            return;
+        }
+
         renderer.begin(ShapeRenderer.ShapeType.Line);
         renderer.setColor(Color.WHITE);
         if (angle == 0f) {
-            renderer.circle(getPosition().x, getPosition().y, radius);
+            float length = 2 * (float) Math.PI * radius;
+            int segments = (int) (length / segLength);
+            renderer.circle(getPosition().x, getPosition().y, radius,
+                    segments);
         } else {
-            float length = (float)Math.toRadians(angle) * radius;
-            int segments = (int)(length / curveRes);
+            float length = (float) Math.toRadians(angle) * radius;
+            int segments = (int) (length / segLength);
             for (int i = 1; i < segments; i++) {
-                float sgmntAngle = angle / (float)segments;
+                float sgmntAngle = angle / (float) segments;
                 Vector2 point1 = curvePoint(sgmntAngle * (i - 1));
                 Vector2 point2 = curvePoint(sgmntAngle * i);
                 renderer.line(point1.x, point1.y, point2.x, point2.y);
@@ -57,7 +70,8 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
 
     Vector2 curvePoint(float ang) {
-        return position.cpy().add(new Vector2(1, 0).setAngle(direction - angle / 2f + ang).scl(radius));
+        Vector2 uv = new Vector2(1, 0).setAngle(direction - angle / 2f + ang);
+        return position.cpy().add(uv.scl(radius));
     }
 
     @Override
@@ -68,7 +82,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
 
     public float getRadius() {
-        return  radius;
+        return radius;
     }
 
     public boolean getReflective() {
