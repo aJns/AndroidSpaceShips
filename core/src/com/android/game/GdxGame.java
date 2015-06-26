@@ -1,11 +1,9 @@
 package com.android.game;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,32 +15,24 @@ public class GdxGame implements ApplicationListener {
     ShapeRenderer renderer;
     Texture img;
     GameLogic logic;
-    AssetManager assMan;
     ArrayList<Drawable> visibleObjects;
     GameState gameState;
     ArtificialIntelligence ai;
     Player player;
     InputHandler input;
-    TreeMap<String, String> assetMap;
     OrthographicCamera camera;
 
     @Override
     public void create() {
-        assMan = new AssetManager();
         batch = new SpriteBatch();
         renderer = new ShapeRenderer();
         visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
 
-        // Save all asset paths in a map
-        assetMap = new TreeMap<String, String>();
-        assetMap.put("spaceship", "img/spaceship.png");
-        assetMap.put("spaceship2", "img/spaceship2.png");
-        assetMap.put("spaceship3", "img/spaceship3.png");
-
         //starting up the gamelogick
-        player = new Player(assetMap, assMan);
-        ai = new ArtificialIntelligence(assetMap, assMan);
+        AssetHandler assHand = new AssetHandler();
+        player = new Player(assHand);
+        ai = new ArtificialIntelligence(assHand);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
         logic.init();
 

@@ -3,39 +3,24 @@ package com.android.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.TreeMap;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable, Controllable {
-    private String imgID = "spaceship3";
     private Sprite sprite;
-    private Texture img;
 
     private float speed;
     private float rotation;
 
     private ArrayList<Command> commands;
 
-    public SpaceShip(Vector2 position, TreeMap<String, String> assetMap,
-            AssetManager assMan) {
-        super();
+    private SpaceShip(Vector2 position) {
         super.position = position;
         speed = 2;
         rotation = 0;
-
-        imgID = assetMap.get(imgID);
-        if (!assMan.isLoaded(imgID)) {
-            assMan.load(imgID, Texture.class);
-            while(!assMan.update());
-        }
-        img = assMan.get(imgID);
-        sprite = new Sprite(img);
 
         commands = new ArrayList<Command>();
     }
@@ -122,5 +107,19 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     @Override
     public void removeLastCommand() {
         commands.remove(commands.size() - 1);
+    }
+
+    public static class Builder {
+        private String imgID = "spaceship";
+
+        public Builder setSprite(String imgID) {
+            this.imgID = imgID;
+            return this;
+        }
+        public SpaceShip build(Vector2 position, AssetHandler assHand) {
+            SpaceShip ship = new SpaceShip(position);
+            ship.sprite = assHand.getSprite(this.imgID);
+            return ship;
+        }
     }
 }
