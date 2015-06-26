@@ -33,8 +33,10 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
 
     @Override
-    public void update() {
-        radius += Math.min(speed, maxRadius - radius);
+    public void update(GameState state) {
+        if (state.isAction()) {
+            radius += Math.min(speed, maxRadius - radius);
+        }
     }
 
     public float getRadius() {

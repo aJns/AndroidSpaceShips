@@ -52,7 +52,7 @@ public class GdxGame implements ApplicationListener {
         camera = new OrthographicCamera(w, h);
         camera.setToOrtho(true);
 
-        input = new InputHandler(player, camera);
+        input = new InputHandler(player, camera, gameState);
         Gdx.input.setInputProcessor(input);
     }
 
@@ -76,6 +76,7 @@ public class GdxGame implements ApplicationListener {
         }
 
         logic.update();
+        gameState.printState();
     }
 
     @Override

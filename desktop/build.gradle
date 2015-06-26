@@ -10,6 +10,7 @@ task run(dependsOn: classes, type: JavaExec) {
   main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
+    standardOutput = System.out
     workingDir = project.assetsDir
     ignoreExitValue = true
 

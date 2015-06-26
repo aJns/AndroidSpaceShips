@@ -34,4 +34,22 @@ public class GameState {
     public void plan() {
         state = State.PLANNING;
     }
+
+    public void toggleState() {
+        switch (state) {
+            case ACTION:
+                state = State.PLANNING;
+                break;
+            case PLANNING:
+                state = State.ACTION;
+                break;
+            case PRESTART:
+                // Do nothing
+                break;
+        }
+    }
+
+    public void printState() {
+        System.out.println(state);
+    }
 }

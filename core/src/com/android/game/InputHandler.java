@@ -1,17 +1,19 @@
 package com.android.game;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 public class InputHandler implements InputProcessor {
     Player player;
     OrthographicCamera camera;
+    GameState state;
 
-    public InputHandler(Player player, OrthographicCamera camera) {
+    public InputHandler(Player player, OrthographicCamera camera, GameState state) {
         this.player = player;
         this.camera = camera;
+        this.state = state;
     }
 
     @Override
@@ -22,8 +24,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        // TODO Auto-generated method stub
-        return false;
+        if (keycode == Input.Keys.SPACE) {
+            state.toggleState();
+        }
+        return true;
     }
 
     @Override
@@ -34,8 +38,10 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 position = new Vector2(screenX, screenY);
-        player.input(position);
+        if (state.isPlanning()) {
+            Vector2 position = new Vector2(screenX, screenY);
+            player.input(position);
+        }
 
         return true;
     }
