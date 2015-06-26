@@ -57,7 +57,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public void draw(ShapeRenderer renderer) {
-        for (Wave w : super.waves) {
+        for (Wave w : getWaves()) {
             w.draw(renderer);
         }
     }
@@ -66,7 +66,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     public void update(GameState state) {
         if (!state.isAction()) { return; }
         parseCommands();
-        for (Iterator<Wave> iterator = super.waves.iterator(); iterator.hasNext(); ) {
+        for (Iterator<Wave> iterator = getWaves().iterator(); iterator.hasNext(); ) {
             Wave wave = iterator.next();
             if (wave.getRadius() >= wave.getMaxRadius()) {
                 iterator.remove();

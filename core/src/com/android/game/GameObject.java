@@ -22,7 +22,7 @@ public class GameObject {
                     if (w.getReflective() && MathUtils.isEqual(w.getRadius(),
                             position.dst(w.getPosition()) + waveSpeed / 2f,
                             waveSpeed / 2f)) {
-                        addWave(position,
+                        addWave(position, go.getPosition().cpy().sub(position).angle(), 90f,
                                 w.getRadius() - position.dst(w.getPosition()),
                                 w.getMaxRadius(), false);
                     }
@@ -33,6 +33,10 @@ public class GameObject {
 
     public void addWave(Vector2 position, float radius, float maxRadius, boolean reflective) {
         waves.add(new Wave(position, radius, maxRadius, reflective));
+    }
+
+    public void addWave(Vector2 position, float direction, float angle, float radius, float maxRadius, boolean reflective) {
+        waves.add(new Wave(position, direction, angle, radius, maxRadius, reflective));
     }
 
     public ArrayList<Wave> getWaves() {
