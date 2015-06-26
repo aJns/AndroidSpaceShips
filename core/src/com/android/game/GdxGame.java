@@ -1,6 +1,5 @@
 package com.android.game;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -38,6 +37,8 @@ public class GdxGame implements ApplicationListener {
         // Save all asset paths in a map
         assetMap = new TreeMap<String, String>();
         assetMap.put("spaceship", "img/spaceship.png");
+        assetMap.put("spaceship2", "img/spaceship2.png");
+        assetMap.put("spaceship3", "img/spaceship3.png");
 
         //starting up the gamelogick
         player = new Player(assetMap, assMan);
