@@ -65,10 +65,16 @@ public class Wave extends GameObject implements Drawable, Updateable {
         float startAngle = direction - angle / 2f;
         for (int i = 1; i <= segments; i++) {
             float segAngle = angle / (float) segments;
-            Vector2 pos = curvePoint(startAngle + segAngle * i);
-            sprite.setPosition(pos.x, pos.y);
-            sprite.setRotation(startAngle + segAngle * i - 90f);
-            sprite.setScale(segLength, 1f);
+            Vector2 pos = Utils.circlePoint(getPosition(),
+                    radius - sprite.getWidth() / 2f,
+                    startAngle + segAngle * i);
+            sprite.setCenter(4f, 0f);
+            sprite.setOriginCenter();
+            sprite.setRotation(startAngle + segAngle * i);
+            sprite.setScale(1f, segLength);
+            float drawX = pos.x - sprite.getWidth() / 2f;
+            float drawY = pos.y;
+            sprite.setPosition(drawX, drawY);
             sprite.draw(batch);
         }
     }
@@ -80,21 +86,19 @@ public class Wave extends GameObject implements Drawable, Updateable {
         }
 
         renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.setColor(Color.WHITE);
+        renderer.setColor(Color.RED);
         float length = (float) Math.toRadians(angle) * radius;
         int segments = (int) (length / segLength);
+        float startAngle = direction - angle / 2f;
         for (int i = 1; i <= segments; i++) {
             float segAngle = angle / (float) segments;
-            Vector2 point1 = curvePoint(segAngle * (i - 1));
-            Vector2 point2 = curvePoint(segAngle * i);
+            Vector2 point1 = Utils.circlePoint(getPosition(), radius,
+                    startAngle + segAngle * (i - 1));
+            Vector2 point2 = Utils.circlePoint(getPosition(), radius,
+                    startAngle + segAngle * i);
             renderer.line(point1.x, point1.y, point2.x, point2.y);
         }
         renderer.end();
-    }
-
-    Vector2 curvePoint(float ang) {
-        Vector2 uv = new Vector2(1, 0).setAngle(ang);
-        return getPosition().cpy().add(uv.scl(radius));
     }
 
     @Override

@@ -17,6 +17,7 @@ public class GameObject {
             if (!go.equals(this)) {
                 for (Wave w : go.getWaves()) {
                     if (w.getReflective() && w.enteredWave(position)) {
+                        // FIXME sometimes spawns double waves
                         addWave(position,
                                 go.getPosition().cpy().sub(position).angle(),
                                 90f,
