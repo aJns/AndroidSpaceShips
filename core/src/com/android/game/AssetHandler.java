@@ -18,6 +18,9 @@ public class AssetHandler {
         assetMap.put("spaceship", "img/spaceship.png");
         assetMap.put("spaceship2", "img/spaceship2.png");
         assetMap.put("spaceship3", "img/spaceship3.png");
+        assetMap.put("waypoint_connector", "img/waypoint_connector.png");
+        assetMap.put("waypoint", "img/waypoint.png");
+        assetMap.put("wave", "img/wave.png");
 
     }
     

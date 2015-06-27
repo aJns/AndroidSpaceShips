@@ -21,6 +21,7 @@ public class GdxGame implements ApplicationListener {
     Player player;
     InputHandler input;
     OrthographicCamera camera;
+    AssetHandler assHand;
 
     @Override
     public void create() {
@@ -30,7 +31,7 @@ public class GdxGame implements ApplicationListener {
         gameState = new GameState();
 
         //starting up the gamelogick
-        AssetHandler assHand = new AssetHandler();
+        assHand = new AssetHandler();
         player = new Player(assHand);
         ai = new ArtificialIntelligence(assHand);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
@@ -56,7 +57,7 @@ public class GdxGame implements ApplicationListener {
         batch.begin();
         //TODO Render all visible objects
         for (Drawable object : visibleObjects) {
-            object.draw(batch);
+            object.draw(batch, assHand);
         }
         batch.end();
 

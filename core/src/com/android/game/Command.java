@@ -53,12 +53,18 @@ public class Command implements Drawable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, AssetHandler assHand) {
+		Sprite sprite = assHand.getSprite("waypoint");
+		sprite.setScale(0.25f);
+		float drawX = commandCoordinates.x - (sprite.getWidth() / 2);
+		float drawY = commandCoordinates.y - (sprite.getHeight() / 2);
+		sprite.setPosition(drawX, drawY);
+		sprite.draw(batch);
+
 		double x = commandCoordinates.x - originCoordinates.x;
 		double y = commandCoordinates.y - originCoordinates.y;
 		float length = (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-		Sprite sprite = 
-			new Sprite(new Texture(Gdx.files.internal("img/wave.png")));
+		sprite = assHand.getSprite("waypoint_connector");
 		sprite.setPosition(originCoordinates.x + ((float) x/2), 
 				originCoordinates.y + ((float) y/2));
 		sprite.setRotation( (float) Math.toDegrees(Math.atan(y/x)));
@@ -69,9 +75,5 @@ public class Command implements Drawable {
 
 	@Override
 	public void draw(ShapeRenderer renderer) {
-		renderer.begin(ShapeRenderer.ShapeType.Line);
-		renderer.setColor(Color.WHITE);
-		renderer.circle(commandCoordinates.x, commandCoordinates.y, 3f);
-		renderer.end();
 	}
 }

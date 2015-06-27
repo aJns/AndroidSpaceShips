@@ -30,9 +30,9 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, AssetHandler assHand) {
         for (Command c : commands) {
-            c.draw(batch);
+            c.draw(batch, assHand);
         }
 
         float scale = 0.25f;
@@ -44,16 +44,13 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         sprite.draw(batch);
 
         for (Wave w : getWaves()) {
-            w.draw(batch);
+            w.draw(batch, assHand);
         }
 
     }
 
     @Override
     public void draw(ShapeRenderer renderer) {
-        for (Command c : commands) {
-            c.draw(renderer);
-        }
     }
 
     @Override

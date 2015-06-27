@@ -1,8 +1,6 @@
 package com.android.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,8 +8,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Wave extends GameObject implements Drawable, Updateable {
-    private Sprite sprite;
-
     private float direction;
     private float angle;
     private float radius;
@@ -23,8 +19,6 @@ public class Wave extends GameObject implements Drawable, Updateable {
     // Circular wave
     public Wave(Vector2 position, float radius, float maxRadius,
                 boolean reflective) {
-        // TODO load sprite using AssetHandler
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("img/wave.png")));
 
         super.position = position.cpy();
         this.angle = 360f;
@@ -38,8 +32,6 @@ public class Wave extends GameObject implements Drawable, Updateable {
     // Arc wave
     public Wave(Vector2 position, float direction, float angle, float radius,
                 float maxRadius, boolean reflective) {
-        // TODO load sprite using AssetHandler
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("img/wave.png")));
 
         super.position = position.cpy();
         this.direction = direction;
@@ -62,7 +54,8 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch, AssetHandler assHand) {
+        Sprite sprite = assHand.getSprite("wave");
         if (radius == 0f) {
             return;
         }
