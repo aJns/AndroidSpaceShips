@@ -1,8 +1,11 @@
 package com.android.game;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-public class Command {
+public class Command implements Drawable {
 	public enum CommandType {
 		MOVE, ATTACK, PING
 	}
@@ -43,5 +46,20 @@ public class Command {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void draw(ShapeRenderer renderer) {
+		renderer.begin(ShapeRenderer.ShapeType.Line);
+		renderer.setColor(Color.WHITE);
+		renderer.line(originCoordinates.x, originCoordinates.y, 
+				commandCoordinates.x, commandCoordinates.y);
+		renderer.end();
 	}
 }

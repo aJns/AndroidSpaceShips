@@ -45,6 +45,9 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         for (Wave w : getWaves()) {
             w.draw(renderer);
         }
+        for (Command c : commands) {
+            c.draw(renderer);
+        }
     }
 
     @Override
