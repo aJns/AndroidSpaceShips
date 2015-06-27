@@ -3,7 +3,6 @@ package com.android.game;
 import java.util.ArrayList;
 
 public class GameLogic {
-    //TODO member variables
     ArrayList<GameObject> gameObjects;
     ArrayList<Drawable> visibleObjects;
     ArrayList<Updateable> updateableObjects;

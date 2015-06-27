@@ -55,7 +55,7 @@ public class GdxGame implements ApplicationListener {
         Gdx.gl.glClearColor(25 / 255f, 25 / 255f, 112 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        //TODO Render all visible objects
+
         for (Drawable object : visibleObjects) {
             object.draw(batch, assHand);
         }
@@ -72,15 +72,11 @@ public class GdxGame implements ApplicationListener {
     @Override
     public void dispose() {
         // Called when game is closed
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void pause() {
         // Called when game is paused
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -93,7 +89,5 @@ public class GdxGame implements ApplicationListener {
     @Override
     public void resume() {
         // Called when game is resumed from pause
-        // TODO Auto-generated method stub
-
     }
 }

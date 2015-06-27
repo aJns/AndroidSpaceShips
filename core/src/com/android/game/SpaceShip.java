@@ -31,6 +31,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
+        //TODO: Remove sprite member variable and get sprite reference here using assHand and imgID
         for (Command c : commands) {
             c.draw(batch, assHand);
         }
@@ -89,7 +90,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean attack() {
-        // TODO Auto-generated method stub
         return false;
     }
 

@@ -6,4 +6,5 @@ public class UserInterface {
     public UserInterface(GameState state) {
         this.state = state;
     }
+    //TODO: Actually implement the UI
 }

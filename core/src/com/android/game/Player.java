@@ -3,6 +3,7 @@ package com.android.game;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends ControlEntity {
+    //TODO: Add list of selected ships that's used for issuing commands
     public Player(AssetHandler assHand) {
         SpaceShip ship = new SpaceShip.Builder()
             .setSprite("spaceship3")
