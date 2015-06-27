@@ -66,7 +66,6 @@ public class GdxGame implements ApplicationListener {
         }
 
         logic.update();
-//        gameState.printState();
     }
 
     @Override

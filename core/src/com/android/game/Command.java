@@ -1,6 +1,9 @@
 package com.android.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -43,6 +46,7 @@ public class Command implements Drawable {
 				return true;
 			} else {
 				subject.move(this.commandCoordinates());
+				originCoordinates = subject.getPosition();
 			}
 		}
 		return false;
@@ -50,7 +54,16 @@ public class Command implements Drawable {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		// TODO Auto-generated method stub
+		double x = commandCoordinates.x - originCoordinates.x;
+		double y = commandCoordinates.y - originCoordinates.y;
+		float length = (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+		Sprite sprite = 
+			new Sprite(new Texture(Gdx.files.internal("img/wave.png")));
+		sprite.setPosition(originCoordinates.x + ((float) x/2), 
+				originCoordinates.y + ((float) y/2));
+		sprite.setRotation( (float) Math.toDegrees(Math.atan(y/x)));
+		sprite.setScale(length, 1f);
+		sprite.draw(batch);
 
 	}
 
@@ -58,8 +71,7 @@ public class Command implements Drawable {
 	public void draw(ShapeRenderer renderer) {
 		renderer.begin(ShapeRenderer.ShapeType.Line);
 		renderer.setColor(Color.WHITE);
-		renderer.line(originCoordinates.x, originCoordinates.y, 
-				commandCoordinates.x, commandCoordinates.y);
+		renderer.circle(commandCoordinates.x, commandCoordinates.y, 3f);
 		renderer.end();
 	}
 }
