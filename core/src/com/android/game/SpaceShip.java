@@ -112,7 +112,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public void removeLastCommand() {
-        commands.remove(commands.size() - 1);
+        if (!commands.isEmpty()) commands.remove(commands.size() - 1);
     }
 
     @Override
