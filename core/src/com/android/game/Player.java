@@ -17,4 +17,9 @@ public class Player extends ControlEntity {
             s.addCommand(command);
         }
     }
+    public void undo() {
+        for (SpaceShip s : getShips()) {
+            s.removeLastCommand();
+        }
+    }
 }

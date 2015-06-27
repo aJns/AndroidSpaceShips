@@ -27,6 +27,9 @@ public class InputHandler implements InputProcessor {
         if (keycode == Input.Keys.SPACE) {
             state.toggleState();
         }
+        if (keycode == Input.Keys.BACKSPACE && state.isPlanning()) {
+            player.undo();
+        }
         return true;
     }
 
