@@ -38,13 +38,14 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         float drawX = getPosition().x - (sprite.getWidth() / 2);
         sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
+
+        for (Wave w : getWaves()) {
+            w.draw(batch);
+        }
     }
 
     @Override
     public void draw(ShapeRenderer renderer) {
-        for (Wave w : getWaves()) {
-            w.draw(renderer);
-        }
         for (Command c : commands) {
             c.draw(renderer);
         }
