@@ -3,6 +3,7 @@ package com.android.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class Wave extends GameObject implements Drawable, Updateable {
@@ -79,6 +80,23 @@ public class Wave extends GameObject implements Drawable, Updateable {
         if (state.isAction()) {
             radius += Math.min(speed, maxRadius - radius);
         }
+    }
+
+    public boolean enteredWave(Vector2 pos) {
+        float tol = speed / 2f;
+        if (MathUtils.isEqual(radius, position.dst(position) + tol, tol)) {
+            if (angle == 0f) {
+                return true;
+            } else {
+                float objAngle = pos.cpy().sub(position).angle();
+                System.out.println(objAngle + ", " + direction);
+                if (MathUtils.isEqual(direction, objAngle, angle / 2f)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public float getRadius() {

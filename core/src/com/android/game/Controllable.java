@@ -9,6 +9,7 @@ public interface Controllable {
     public Vector2 getPosition();
     public Vector2 getLastPosition();   // Gets the last waypoint position
     public void addWave(Vector2 position, float radius, float maxRadius, boolean reflective);
+    public void addWave(Vector2 position, float direction, float angle, float radius, float maxRadius, boolean reflective);
 
     public boolean parseCommands(); // returns false if there are no commands left
     public void addCommand(Command command);
