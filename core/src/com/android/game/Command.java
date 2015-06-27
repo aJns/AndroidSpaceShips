@@ -9,16 +9,20 @@ public class Command {
 
 	CommandType type;
 	Vector2 commandCoordinates;
+	Vector2 originCoordinates;
 	boolean newCommand;
 
-	public Command(CommandType type, Vector2 commandCoordinates) {
+	public Command(CommandType type, Vector2 commandCoordinates, 
+			Vector2 originCoordinates) {
 		this.type = type;
 		this.commandCoordinates = commandCoordinates;
+		this.originCoordinates = originCoordinates;
 		this.newCommand = true;
 	}
 
 	public CommandType type() { return type; }
 	public Vector2 commandCoordinates() { return commandCoordinates; }
+	public Vector2 originCoordinates() { return originCoordinates; }
 	public boolean newCommand() { return newCommand; }
 
 	public void setOld() { newCommand = false; };

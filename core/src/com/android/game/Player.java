@@ -11,8 +11,9 @@ public class Player extends ControlEntity {
     }
 
     public void input(Vector2 pos) {
-        Command command = new Command(Command.CommandType.MOVE, pos);
         for (SpaceShip s : getShips()) {
+            Vector2 origin = s.getLastPosition();
+        Command command = new Command(Command.CommandType.MOVE, pos, origin);
             s.addCommand(command);
         }
     }

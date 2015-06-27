@@ -109,6 +109,14 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         commands.remove(commands.size() - 1);
     }
 
+    @Override
+    public Vector2 getLastPosition() {
+        if (commands.isEmpty()) { return getPosition(); }
+        else {
+            return commands.get(commands.size() - 1).commandCoordinates();
+        }
+    }
+
     public static class Builder {
         private String imgID = "spaceship";
 
