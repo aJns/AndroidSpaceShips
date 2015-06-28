@@ -37,7 +37,7 @@ public class Command implements Drawable {
 	public boolean executeCommand(Controllable subject) {
 		if (this.type == CommandType.MOVE) {
 			if (this.newCommand) {
-				subject.addWave(subject.getPosition(), 0, 500, true);
+				subject.addWave(subject.getPosition(), 0f, 5000f, true);
 				this.setOld();
 			}
 

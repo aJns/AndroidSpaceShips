@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Utils {
     public static final float LIGHT_SPEED = 5f;
+    public static final float ENERGY_DENSITY_THRESHOLD = 1f;
 
     // Returns the absolute difference between two angles (degrees)
     public static float angleDifference(float a1, float a2) {

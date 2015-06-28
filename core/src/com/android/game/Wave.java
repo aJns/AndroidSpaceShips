@@ -11,19 +11,18 @@ public class Wave extends GameObject implements Drawable, Updateable {
     private float direction;
     private float angle;
     private float radius;
-    private float maxRadius;
+    private float energy;
     private boolean reflective;
     private float speed;
     private float segLength;
 
     // Circular wave
-    public Wave(Vector2 position, float radius, float maxRadius,
+    public Wave(Vector2 position, float radius, float energy,
                 boolean reflective) {
-
         super.position = position.cpy();
         this.angle = 360f;
         this.radius = radius;
-        this.maxRadius = maxRadius;
+        this.energy = energy;
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
         segLength = 10f;
@@ -31,13 +30,13 @@ public class Wave extends GameObject implements Drawable, Updateable {
 
     // Arc wave
     public Wave(Vector2 position, float direction, float angle, float radius,
-                float maxRadius, boolean reflective) {
+                float energy, boolean reflective) {
 
         super.position = position.cpy();
         this.direction = direction;
         this.angle = angle;
         this.radius = radius;
-        this.maxRadius = maxRadius;
+        this.energy = energy;
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
         segLength = 10f;
@@ -49,8 +48,8 @@ public class Wave extends GameObject implements Drawable, Updateable {
     public boolean getReflective() {
         return reflective;
     }
-    public float getMaxRadius() {
-        return maxRadius;
+    public float getEnergy() {
+        return energy;
     }
 
     @Override
@@ -72,6 +71,8 @@ public class Wave extends GameObject implements Drawable, Updateable {
             sprite.setOriginCenter();
             sprite.setRotation(startAngle + segAngle * i);
             sprite.setScale(1f, segLength);
+//            float edAtOne = energy / (float) Math.toRadians(angle);
+//            sprite.setAlpha(energyDensity() / edAtOne);
             float drawX = pos.x - sprite.getWidth() / 2f;
             float drawY = pos.y;
             sprite.setPosition(drawX, drawY);
@@ -104,8 +105,14 @@ public class Wave extends GameObject implements Drawable, Updateable {
     @Override
     public void update(GameState state) {
         if (state.isAction()) {
-            radius += Math.min(speed, maxRadius - radius);
+            radius += speed;
         }
+    }
+
+    // Actually linear energy density (J / m)
+    public float energyDensity() {
+        float arcLength = (float) Math.toRadians(angle) * radius;
+        return energy / arcLength;
     }
 
     public boolean enteredWave(Vector2 pos) {

@@ -60,7 +60,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         parseCommands();
         for (Iterator<Wave> iterator = getWaves().iterator(); iterator.hasNext(); ) {
             Wave wave = iterator.next();
-            if (wave.getRadius() >= wave.getMaxRadius()) {
+            if (wave.energyDensity() < Utils.ENERGY_DENSITY_THRESHOLD) {
                 iterator.remove();
             }
         }

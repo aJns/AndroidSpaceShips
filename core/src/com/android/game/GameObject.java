@@ -1,5 +1,6 @@
 package com.android.game;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -16,13 +17,15 @@ public class GameObject {
         for (GameObject go : gameObjects) {
             if (!go.equals(this)) {
                 for (Wave w : go.getWaves()) {
+                    // FIXME sometimes spawns double waves
                     if (w.getReflective() && w.enteredWave(position)) {
-                        // FIXME sometimes spawns double waves
+                        // TODO get actual diameter of object
+                        float diameter = 100f;
                         addWave(position,
                                 go.getPosition().cpy().sub(position).angle(),
-                                90f,
+                                (float) Math.toDegrees(diameter / w.getRadius()),
                                 w.getRadius() - position.dst(w.getPosition()),
-                                w.getMaxRadius(), false);
+                                w.energyDensity() * diameter, false);
                     }
                 }
             }
