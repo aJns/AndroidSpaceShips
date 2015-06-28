@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,10 +27,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         commands = new ArrayList<Command>();
     }
 
-    public void setDestination(Vector2 destination) {
-        addWave(getPosition(), 0, 500, true);
-    }
-
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
         //TODO: Remove sprite member variable and get sprite reference here using assHand and imgID
@@ -50,6 +47,17 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public void draw(ShapeRenderer renderer) {
+        // Limits for turning
+        renderer.begin(ShapeRenderer.ShapeType.Line);
+        renderer.setColor(Color.RED);
+        float maxAngle = maxTurnAngle();
+        renderer.arc(getPosition().x, getPosition().y, 200f,
+                rotation - maxAngle, 2f * maxAngle);
+        renderer.end();
+    }
+
+    public float maxTurnAngle() {
+        return (-180f / Utils.LIGHT_SPEED) * speed + 180f;
     }
 
     @Override
@@ -62,13 +70,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
                 iterator.remove();
             }
         }
-    }
-
-    void randomizeDestination(int xMax, int yMax) {
-        Random rand = new Random();
-        Vector2 randVec = new Vector2(rand.nextInt(2 * xMax) - xMax,
-                rand.nextInt(2 * yMax) - yMax);
-        setDestination(randVec);
     }
 
     @Override
@@ -89,6 +90,11 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     @Override
     public boolean attack() {
         return false;
+    }
+
+    @Override
+    public float getRotation() {
+        return rotation;
     }
 
     @Override
