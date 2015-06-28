@@ -1,8 +1,5 @@
 package com.android.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -46,8 +43,6 @@ public class Command implements Drawable {
         newCommand = false;
     }
 
-    ;
-
     // returns true if command was finished
     public boolean executeCommand(Controllable subject) {
         if (this.type == CommandType.MOVE) {
@@ -66,6 +61,8 @@ public class Command implements Drawable {
                 originCoordinates = subject.getPosition();
             }
         }
+        if (this.type == CommandType.ATTACK) { return true; }
+        if (this.type == CommandType.PING) { return true; }
         return false;
     }
 

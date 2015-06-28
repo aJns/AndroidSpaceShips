@@ -1,9 +1,8 @@
 package com.android.game;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-
 import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class GameObject {
     protected Vector2 position;
@@ -52,7 +51,6 @@ public class GameObject {
     }
 
     public float getDiameter() {
-        // TODO get actual diameter of object
         return diameter;
     }
 }
