@@ -19,6 +19,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
     // Circular wave
     public Wave(Vector2 position, float radius, float energy,
                 boolean reflective) {
+        super();
         super.position = position.cpy();
         this.angle = 360f;
         this.radius = radius;
@@ -31,7 +32,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
     // Arc wave
     public Wave(Vector2 position, float direction, float angle, float radius,
                 float energy, boolean reflective) {
-
+        super();
         super.position = position.cpy();
         this.direction = direction;
         this.angle = angle;
@@ -50,6 +51,15 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
     public float getEnergy() {
         return energy;
+    }
+    public void setEnergy(float energy) {
+        this.energy = energy;
+    }
+    public float getDirection() {
+        return direction;
+    }
+    public float getAngle() {
+        return angle;
     }
 
     @Override
