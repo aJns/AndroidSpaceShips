@@ -7,6 +7,7 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable, Controllable {
@@ -35,10 +36,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         for (Command c : commands) {
             c.draw(batch, assHand);
         }
-
-        float scale = 0.25f;
         sprite.setRotation(rotation);
-        sprite.setScale(scale);
         float drawY = getPosition().y - (sprite.getHeight() / 2);
         float drawX = getPosition().x - (sprite.getWidth() / 2);
         sprite.setPosition(drawX, drawY);
@@ -132,8 +130,16 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         }
         public SpaceShip build(Vector2 position, AssetHandler assHand) {
             SpaceShip ship = new SpaceShip(position);
-            ship.sprite = assHand.getSprite(this.imgID);
+            Sprite sprite = assHand.getSprite(this.imgID);
+            float scale = 0.25f;
+            sprite.setScale(scale);
+            ship.sprite = sprite;
+            Rectangle box = sprite.getBoundingRectangle();
+            ship.diameter = box.perimeter();
+            System.out.println(box.perimeter());
+            System.out.println(box.perimeter());
             return ship;
+
         }
     }
 }

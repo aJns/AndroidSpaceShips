@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class GameObject {
     protected Vector2 position;
     protected ArrayList<Wave> waves;
+    protected float diameter = 100f;
 
     public GameObject() {
         waves = new ArrayList<Wave>();
@@ -19,8 +20,7 @@ public class GameObject {
                 for (Wave w : go.getWaves()) {
                     // FIXME sometimes spawns double waves
                     if (w.getReflective() && w.enteredWave(position)) {
-                        // TODO get actual diameter of object
-                        float diameter = 100f;
+                        float diameter = go.getDiameter();
                         addWave(position,
                                 go.getPosition().cpy().sub(position).angle(),
                                 (float) Math.toDegrees(diameter / w.getRadius()),
@@ -49,5 +49,10 @@ public class GameObject {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public float getDiameter() {
+        // TODO get actual diameter of object
+        return diameter;
     }
 }
