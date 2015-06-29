@@ -47,10 +47,18 @@ public class Command implements Drawable {
         newCommand = false;
     }
 
-    // return true if position set, false otherwise
     public boolean setCommandCoords(Vector2 pos) {
-        if (type != CommandType.PING && pos != null) {
-            this.commandCoordinates = pos;
+        System.out.print("Update:   ");
+        if (pos == null) {
+            System.out.print("Position null   ");
+        }
+        if (type != CommandType.PING) {
+            if (pos == null && type != CommandType.ATTACK) {
+                type = CommandType.PING;
+            } else {
+                this.commandCoordinates = pos;
+            }
+            System.out.println(type);
             return true;
         }
         return false;
