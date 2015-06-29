@@ -21,6 +21,10 @@ public class Command implements Drawable {
         this.commandCoordinates = commandCoordinates;
         this.originCoordinates = originCoordinates;
         this.newCommand = true;
+
+        System.out.print("New command:   ");
+        System.out.print("Type:   ");
+        System.out.println(type);
     }
 
     public CommandType type() {
@@ -41,6 +45,15 @@ public class Command implements Drawable {
 
     public void setOld() {
         newCommand = false;
+    }
+
+    // return true if position set, false otherwise
+    public boolean setCommandCoords(Vector2 pos) {
+        if (type != CommandType.PING && pos != null) {
+            this.commandCoordinates = pos;
+            return true;
+        }
+        return false;
     }
 
     // returns true if command was finished

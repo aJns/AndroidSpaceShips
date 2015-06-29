@@ -36,6 +36,16 @@ public class Player extends ControlEntity {
             }
         }
     }
+
+    public void updateLastCommand(Vector2 pos) {
+        for (SpaceShip s : getShips()) {
+            Command command = s.getLastCommand();
+            if (!command.setCommandCoords(pos)) {
+                s.removeLastCommand();
+            }
+        }
+    }
+
     public void undo() {
         for (SpaceShip s : getShips()) {
             s.removeLastCommand();

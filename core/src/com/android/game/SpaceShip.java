@@ -135,6 +135,12 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         return circle;
     }
 
+    @Override
+    public Command getLastCommand() {
+        if (commands.isEmpty()) { return null; }
+        return commands.get(commands.size() - 1);
+    }
+
     public static class Builder {
         private String imgID = "spaceship";
 
