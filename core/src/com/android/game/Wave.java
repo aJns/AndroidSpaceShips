@@ -81,8 +81,8 @@ public class Wave extends GameObject implements Drawable, Updateable {
             sprite.setOriginCenter();
             sprite.setRotation(startAngle + segAngle * i);
             sprite.setScale(1f, segLength);
-//            float edAtOne = energy / (float) Math.toRadians(angle);
-//            sprite.setAlpha(energyDensity() / edAtOne);
+            float maxRadius = energy / (float) Math.toRadians(angle);
+            sprite.setAlpha(1f - radius / maxRadius);
             float drawX = pos.x - sprite.getWidth() / 2f;
             float drawY = pos.y;
             sprite.setPosition(drawX, drawY);

@@ -19,42 +19,17 @@ public class GameObject {
             int length = go.getWaves().size();
             for (int i = 0; i < length; i++) {
                 Wave w = go.getWaves().get(i);
-                if (!w.getReflective() || !w.enteredWave(position)) {
-                    continue;
+                if (!w.enteredWave(position)) continue;
+                // FIXME sometimes spawns double waves (rare)
+
+                // Left side
+                splitWave(go, w, -1);
+                // Right side
+                splitWave(go, w, 1);
+
+                if (w.getReflective()) {
+                    reflectWave(w);
                 }
-
-                // FIXME sometimes spawns double waves
-                // TODO clean this shit up
-
-                // Left part
-                Vector2 pos = w.getPosition();
-                float ang = Utils.angleDifference(position.cpy().sub(w.getPosition()).angle(),
-                        w.getDirection() - w.getAngle() / 2f)
-                        - (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())));
-                float dir = position.cpy().sub(w.getPosition()).angle()
-                        - (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())))
-                        - ang / 2f;
-                float rad = w.getRadius();
-                float ene = ang / w.getAngle() * w.getEnergy();
-                boolean ref = true;
-
-                go.addWave(pos, dir, ang, rad, ene, ref);
-
-                // Right part
-                pos = w.getPosition();
-                ang = Utils.angleDifference(position.cpy().sub(w.getPosition()).angle(),
-                        w.getDirection() + w.getAngle() / 2f)
-                        - (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())));
-                dir = position.cpy().sub(w.getPosition()).angle()
-                        + (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())))
-                        + ang / 2f;
-                rad = w.getRadius();
-                ene = ang / w.getAngle() * w.getEnergy();
-                ref = true;
-
-                go.addWave(pos, dir, ang, rad, ene, ref);
-
-                reflectWave(w);
                 // Destroys old wave
                 w.setEnergy(0f);
             }
@@ -71,6 +46,22 @@ public class GameObject {
         boolean ref = false;
 
         addWave(pos, dir, ang, rad, ene, ref);
+    }
+
+    void splitWave(GameObject go, Wave w, int side) {
+        // Still messy
+        Vector2 pos = w.getPosition();
+        float ang = Utils.angleDifference(position.cpy().sub(w.getPosition()).angle(),
+                w.getDirection() + side * w.getAngle() / 2f)
+                - (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())));
+        float dir = position.cpy().sub(w.getPosition()).angle()
+                + side * (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())))
+                + side * ang / 2f;
+        float rad = w.getRadius();
+        float ene = ang / w.getAngle() * w.getEnergy();
+        boolean ref = true;
+
+        go.addWave(pos, dir, ang, rad, ene, ref);
     }
 
     public void addWave(Vector2 position, float radius, float energy,
