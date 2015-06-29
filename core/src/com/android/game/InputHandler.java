@@ -9,6 +9,10 @@ public class InputHandler implements InputProcessor {
     Player player;
     OrthographicCamera camera;
     GameState state;
+    Vector2 inputOrigin;
+    boolean dragged = false;
+    int dragTimer = 0;
+    final int DRAG_LIMIT = 10;
 
     public InputHandler(Player player, OrthographicCamera camera, GameState state) {
         this.player = player;
@@ -39,22 +43,32 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (state.isPlanning()) {
-            Vector2 position = new Vector2(screenX, screenY);
-            player.input(position);
-        }
+        inputOrigin = new Vector2(screenX, screenY);
 
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        if (state.isPlanning()) {
+            Vector2 inputPosition = new Vector2(screenX, screenY);
+            // The player needs to drag for a set amount of time to trigger
+            // a move command. Below this time the command is parsed as a
+            // ping command.
+            if (!dragged) { inputPosition = null; }
+            player.input(inputPosition, inputOrigin);
+        }
+        inputOrigin = null;
+        dragged = false;
+        dragTimer = 0;
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+        dragTimer++;
+        if (dragTimer > DRAG_LIMIT) { dragged = true; }
+        return true;
     }
 
     @Override

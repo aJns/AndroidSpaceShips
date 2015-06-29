@@ -2,12 +2,12 @@ package com.android.game;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -121,10 +121,18 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public Vector2 getLastPosition() {
-        if (commands.isEmpty()) { return getPosition(); }
-        else {
-            return commands.get(commands.size() - 1).commandCoordinates();
+        for (int i = commands.size() - 1; i>-1; i--) {
+            if (commands.get(i).type() == Command.CommandType.MOVE) {
+                return commands.get(i).commandCoordinates();
+            }
         }
+        return getPosition();
+    }
+
+    public Rectangle getBoundingRectangle() { return sprite.getBoundingRectangle(); }
+    public Circle getWaypointHitBox() {
+        Circle circle = new Circle(getLastPosition(), diameter);
+        return circle;
     }
 
     public static class Builder {
@@ -141,11 +149,10 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
             sprite.setScale(scale);
             ship.sprite = sprite;
             Rectangle box = sprite.getBoundingRectangle();
-            ship.diameter = box.perimeter();
+            // ship.diameter = box.perimeter();
             System.out.println(box.perimeter());
             System.out.println(box.perimeter());
             return ship;
-
         }
     }
 }

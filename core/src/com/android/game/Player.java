@@ -1,5 +1,6 @@
 package com.android.game;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends ControlEntity {
@@ -11,11 +12,28 @@ public class Player extends ControlEntity {
         addShip(ship);
     }
 
-    public void input(Vector2 pos) {
+    public void input(Vector2 pos, Vector2 origin) {
         for (SpaceShip s : getShips()) {
-            Vector2 origin = s.getLastPosition();
-        Command command = new Command(Command.CommandType.MOVE, pos, origin);
-            s.addCommand(command);
+            Vector2 shipOrigin = s.getLastPosition();
+            Circle circle = s.getWaypointHitBox();
+            if (circle.contains(origin) && pos != null) {
+                Command command = new Command(Command.CommandType.MOVE, pos, 
+                        shipOrigin);
+                s.addCommand(command);
+                break;
+            }
+            if (circle.contains(origin) && pos == null) {
+                Command command = new Command(Command.CommandType.PING, pos, 
+                        shipOrigin);
+                s.addCommand(command);
+                break;
+            }
+            if(!circle.contains(origin)) {
+                Command command = new Command(Command.CommandType.ATTACK, pos, 
+                        shipOrigin);
+                s.addCommand(command);
+                break;
+            }
         }
     }
     public void undo() {

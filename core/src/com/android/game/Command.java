@@ -61,13 +61,18 @@ public class Command implements Drawable {
                 originCoordinates = subject.getPosition();
             }
         }
-        if (this.type == CommandType.ATTACK) { return true; }
-        if (this.type == CommandType.PING) { return true; }
+        if (this.type == CommandType.ATTACK) {
+            return true;
+        }
+        if (this.type == CommandType.PING) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
+        if (type != CommandType.MOVE) { return; }
         Sprite sprite = assHand.getSprite("waypoint");
         sprite.setScale(0.25f);
         float drawX = commandCoordinates.x - (sprite.getWidth() / 2);
