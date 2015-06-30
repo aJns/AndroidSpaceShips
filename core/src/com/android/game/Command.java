@@ -21,10 +21,6 @@ public class Command implements Drawable {
         this.commandCoordinates = commandCoordinates;
         this.originCoordinates = originCoordinates;
         this.newCommand = true;
-
-        System.out.print("New command:   ");
-        System.out.print("Type:   ");
-        System.out.println(type);
     }
 
     public CommandType type() {
@@ -48,9 +44,7 @@ public class Command implements Drawable {
     }
 
     public boolean setCommandCoords(Vector2 pos) {
-        System.out.print("Update:   ");
         if (pos == null) {
-            System.out.print("Position null   ");
         }
         if (type != CommandType.PING) {
             if (pos == null && type != CommandType.ATTACK) {
@@ -58,7 +52,6 @@ public class Command implements Drawable {
             } else {
                 this.commandCoordinates = pos;
             }
-            System.out.println(type);
             return true;
         }
         return false;
@@ -83,9 +76,11 @@ public class Command implements Drawable {
             }
         }
         if (this.type == CommandType.ATTACK) {
+            System.out.println("Pew pew (Attacking not yet implemented :< )");
             return true;
         }
         if (this.type == CommandType.PING) {
+            subject.ping();
             return true;
         }
         return false;

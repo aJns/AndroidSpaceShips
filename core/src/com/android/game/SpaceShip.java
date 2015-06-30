@@ -89,6 +89,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean attack() {
+        // TODO: Implement attacking
         return false;
     }
 

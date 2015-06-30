@@ -43,10 +43,11 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        inputOrigin = new Vector2(screenX, screenY);
-        Vector2 inputPosition = new Vector2(screenX, screenY);
-        player.input(inputPosition, inputOrigin);
-
+        if (state.isPlanning()) {
+            inputOrigin = new Vector2(screenX, screenY);
+            Vector2 inputPosition = new Vector2(screenX, screenY);
+            player.input(inputPosition, inputOrigin);
+        }
         return true;
     }
 
@@ -68,10 +69,12 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        dragTimer++;
-        if (dragTimer > DRAG_LIMIT) { dragged = true; }
-        Vector2 inputPosition = new Vector2(screenX, screenY);
-        player.updateLastCommand(inputPosition);
+        if (state.isPlanning()) {
+            dragTimer++;
+            if (dragTimer > DRAG_LIMIT) { dragged = true; }
+            Vector2 inputPosition = new Vector2(screenX, screenY);
+            player.updateLastCommand(inputPosition);
+        }
         return true;
     }
 

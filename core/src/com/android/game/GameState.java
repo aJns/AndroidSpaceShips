@@ -50,6 +50,6 @@ public class GameState {
     }
 
     public void printState() {
-        System.out.println(state);
+        System.out.println("Current state: " + state);
     }
 }
