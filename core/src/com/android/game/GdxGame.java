@@ -45,7 +45,7 @@ public class GdxGame implements ApplicationListener {
 
         userInterface = new UserInterface(gameState, assHand, w, h);
 
-        input = new InputHandler(player, camera, gameState);
+        input = new InputHandler(player, camera, gameState, userInterface);
         Gdx.input.setInputProcessor(input);
     }
 

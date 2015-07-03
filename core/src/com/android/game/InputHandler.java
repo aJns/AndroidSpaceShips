@@ -9,15 +9,20 @@ public class InputHandler implements InputProcessor {
     Player player;
     OrthographicCamera camera;
     GameState state;
+    UserInterface userInterface;
+
+    boolean commandInput = false;
     Vector2 inputOrigin;
     boolean dragged = false;
     int dragTimer = 0;
     final int DRAG_LIMIT = 10;
 
-    public InputHandler(Player player, OrthographicCamera camera, GameState state) {
+    public InputHandler(Player player, OrthographicCamera camera, 
+            GameState state, UserInterface userInterface) {
         this.player = player;
         this.camera = camera;
         this.state = state;
+        this.userInterface = userInterface;
     }
 
     @Override
@@ -43,17 +48,22 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (userInterface.handleInput(new Vector2(screenX, screenY))) {
+            commandInput = false;
+            return true;
+        }
         if (state.isPlanning()) {
             inputOrigin = new Vector2(screenX, screenY);
             Vector2 inputPosition = new Vector2(screenX, screenY);
             player.input(inputPosition, inputOrigin);
+            commandInput = true;
         }
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (state.isPlanning()) {
+        if (state.isPlanning() && commandInput) {
             Vector2 inputPosition = new Vector2(screenX, screenY);
             // The player needs to drag for a set amount of time to trigger
             // a move command. Below this time the command is parsed as a
@@ -69,7 +79,7 @@ public class InputHandler implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (state.isPlanning()) {
+        if (state.isPlanning() && commandInput) {
             dragTimer++;
             if (dragTimer > DRAG_LIMIT) { dragged = true; }
             Vector2 inputPosition = new Vector2(screenX, screenY);

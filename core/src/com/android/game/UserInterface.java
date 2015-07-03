@@ -4,6 +4,7 @@ import com.android.game.Command.CommandType;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class UserInterface implements Drawable {
@@ -17,18 +18,21 @@ public class UserInterface implements Drawable {
     public UserInterface(GameState state, AssetHandler assHand, 
             float screenWidth, float screenHeight) {
         this.state = state;
-        // xPos = screenWidth - 100;
         sprite = assHand.getSprite(planID);
         yPos = screenHeight - sprite.getHeight();
     }
 
     // Returns true if input is processed
     public boolean handleInput(Vector2 pos) {
+        Rectangle box = sprite.getBoundingRectangle();
+        if (box.contains(pos)) {
+            state.toggleState();
+            return true;
+        }
         return false;
     }
 
     public void resize(float screenWidth, float screenHeight) {
-        // xPos = screenWidth - 100;
         yPos = screenHeight - sprite.getHeight();
     }
 
