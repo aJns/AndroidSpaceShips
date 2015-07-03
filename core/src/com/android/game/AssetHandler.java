@@ -21,6 +21,8 @@ public class AssetHandler {
         assetMap.put("waypoint_connector", "img/waypoint_connector.png");
         assetMap.put("waypoint", "img/waypoint.png");
         assetMap.put("wave", "img/wave.png");
+        assetMap.put("planning", "img/planning.png");
+        assetMap.put("actio", "img/action.png");
 
     }
     

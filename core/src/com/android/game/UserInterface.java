@@ -1,10 +1,32 @@
 package com.android.game;
 
-public class UserInterface {
-    GameState state;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 
-    public UserInterface(GameState state) {
+public class UserInterface implements Drawable {
+    GameState state;
+    Sprite planning_sprite;
+    Sprite action_sprite;
+
+    public UserInterface(GameState state, AssetHandler assHand) {
         this.state = state;
+        this.planning_sprite = assHand.getSprite("planning");
+        this.action_sprite = assHand.getSprite("action");
     }
-    //TODO: Actually implement the UI
+
+    // Returns true if input is processed
+    public boolean handleInput(Vector2 pos) {
+    }
+
+    @Override
+    public void draw(SpriteBatch batch, AssetHandler assHand) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void draw(ShapeRenderer renderer) {
+    }
 }
