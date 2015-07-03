@@ -32,8 +32,6 @@ public class GdxGame implements ApplicationListener {
         gameState = new GameState();
         assHand = new AssetHandler();
 
-        userInterface = new UserInterface(gameState);
-
         player = new Player(assHand);
         ai = new ArtificialIntelligence(assHand);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
@@ -44,6 +42,8 @@ public class GdxGame implements ApplicationListener {
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);
         camera.setToOrtho(true);
+
+        userInterface = new UserInterface(gameState, assHand, w, h);
 
         input = new InputHandler(player, camera, gameState);
         Gdx.input.setInputProcessor(input);
@@ -90,6 +90,8 @@ public class GdxGame implements ApplicationListener {
         camera.setToOrtho(true);
         camera.viewportWidth = width;
         camera.viewportHeight = height;
+
+        userInterface.resize(width, height);
     }
 
     @Override

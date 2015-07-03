@@ -11,16 +11,25 @@ public class UserInterface implements Drawable {
     String planID = "planning";
     String actionID = "action";
     Sprite sprite;
-    final float XPOS = 0;
-    final float YPOS = 0;
+    float xPos = 0;
+    float yPos = 0;
 
-    public UserInterface(GameState state) {
+    public UserInterface(GameState state, AssetHandler assHand, 
+            float screenWidth, float screenHeight) {
         this.state = state;
+        // xPos = screenWidth - 100;
+        sprite = assHand.getSprite(planID);
+        yPos = screenHeight - sprite.getHeight();
     }
 
     // Returns true if input is processed
     public boolean handleInput(Vector2 pos) {
         return false;
+    }
+
+    public void resize(float screenWidth, float screenHeight) {
+        // xPos = screenWidth - 100;
+        yPos = screenHeight - sprite.getHeight();
     }
 
     @Override
@@ -30,9 +39,8 @@ public class UserInterface implements Drawable {
         } else {
             sprite = assHand.getSprite(actionID);
         }
-        // sprite.setRotation();
         sprite.flip(false, true);
-        sprite.setPosition(XPOS, YPOS);
+        sprite.setPosition(xPos, yPos);
         sprite.draw(batch);
     }
 
