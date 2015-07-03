@@ -22,6 +22,7 @@ public class GdxGame implements ApplicationListener {
     InputHandler input;
     OrthographicCamera camera;
     AssetHandler assHand;
+    UserInterface userInterface;
 
     @Override
     public void create() {
@@ -29,9 +30,10 @@ public class GdxGame implements ApplicationListener {
         renderer = new ShapeRenderer();
         visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
-
-        //starting up the gamelogick
         assHand = new AssetHandler();
+
+        userInterface = new UserInterface(gameState);
+
         player = new Player(assHand);
         ai = new ArtificialIntelligence(assHand);
         logic = new GameLogic(visibleObjects, gameState, player, ai);
@@ -59,6 +61,10 @@ public class GdxGame implements ApplicationListener {
         for (Drawable object : visibleObjects) {
             object.draw(batch, assHand);
         }
+
+        // Drawing userInterface here so it's on top
+        userInterface.draw(batch, assHand);
+
         batch.end();
 
         renderer.setProjectionMatrix(camera.combined);

@@ -1,5 +1,6 @@
 package com.android.game;
 
+import com.android.game.Command.CommandType;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -7,13 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 
 public class UserInterface implements Drawable {
     GameState state;
-    Sprite planning_sprite;
-    Sprite action_sprite;
+    String planID = "planning";
+    String actionID = "action";
+    Sprite sprite;
+    final float XPOS = 0;
+    final float YPOS = 0;
 
-    public UserInterface(GameState state, AssetHandler assHand) {
+    public UserInterface(GameState state) {
         this.state = state;
-        this.planning_sprite = assHand.getSprite("planning");
-        this.action_sprite = assHand.getSprite("action");
     }
 
     // Returns true if input is processed
@@ -23,8 +25,15 @@ public class UserInterface implements Drawable {
 
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
-        // TODO Auto-generated method stub
-
+        if (state.isPlanning()) {
+            sprite = assHand.getSprite(planID);
+        } else {
+            sprite = assHand.getSprite(actionID);
+        }
+        // sprite.setRotation();
+        sprite.flip(false, true);
+        sprite.setPosition(XPOS, YPOS);
+        sprite.draw(batch);
     }
 
     @Override

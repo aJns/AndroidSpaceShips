@@ -22,8 +22,7 @@ public class AssetHandler {
         assetMap.put("waypoint", "img/waypoint.png");
         assetMap.put("wave", "img/wave.png");
         assetMap.put("planning", "img/planning.png");
-        assetMap.put("actio", "img/action.png");
-
+        assetMap.put("action", "img/action.png");
     }
     
     public <T> T getAsset(String assetID) {
