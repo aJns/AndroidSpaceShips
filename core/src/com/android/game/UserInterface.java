@@ -18,6 +18,7 @@ public class UserInterface implements Drawable {
 
     // Returns true if input is processed
     public boolean handleInput(Vector2 pos) {
+        return false;
     }
 
     @Override
