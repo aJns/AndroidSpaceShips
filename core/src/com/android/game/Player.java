@@ -30,7 +30,7 @@ public class Player extends ControlEntity {
             }
             if(!circle.contains(origin)) {
                 Command command = new Command(Command.CommandType.ATTACK, pos, 
-                        shipOrigin);
+                        origin);
                 s.addCommand(command);
                 break;
             }
@@ -39,8 +39,9 @@ public class Player extends ControlEntity {
 
     public void updateLastCommand(Vector2 pos) {
         for (SpaceShip s : getShips()) {
+            Vector2 shipOrigin = s.getLastPosition();
             Command command = s.getLastCommand();
-            if (!command.setCommandCoords(pos)) {
+            if (!command.setCommandCoords(pos, shipOrigin)) {
                 s.removeLastCommand();
             }
         }

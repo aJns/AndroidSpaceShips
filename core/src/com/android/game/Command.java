@@ -43,13 +43,19 @@ public class Command implements Drawable {
         newCommand = false;
     }
 
-    public boolean setCommandCoords(Vector2 pos) {
+    public boolean setCommandCoords(Vector2 pos, Vector2 origin) {
+        // FIXME: The attack command sometimes jumps to the ships position, if clicking very quickly
         if (pos == null) {
         }
         if (type != CommandType.PING) {
             if (pos == null && type != CommandType.ATTACK) {
                 type = CommandType.PING;
-            } else {
+            }
+            if (type == CommandType.ATTACK) {
+                this.commandCoordinates = originCoordinates;
+                this.originCoordinates = origin;
+            }
+            else {
                 this.commandCoordinates = pos;
             }
             return true;
@@ -88,14 +94,24 @@ public class Command implements Drawable {
 
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
-        if (type != CommandType.MOVE) { return; }
-        Sprite sprite = assHand.getSprite("waypoint");
+        Sprite sprite = assHand.getSprite("placeholder");
+        if (type == CommandType.MOVE) {
+            sprite = assHand.getSprite("waypoint");
+        }
+        else if (type == CommandType.ATTACK) {
+            sprite = assHand.getSprite("attack_order");
+            if (commandCoordinates == null) {
+                commandCoordinates = originCoordinates;
+            }
+        }
+        else { return; }
         sprite.setScale(0.25f);
         float drawX = commandCoordinates.x - (sprite.getWidth() / 2);
         float drawY = commandCoordinates.y - (sprite.getHeight() / 2);
         sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
 
+        if (type != CommandType.MOVE) { return; }
         double x = commandCoordinates.x - originCoordinates.x;
         double y = commandCoordinates.y - originCoordinates.y;
         float length = (float) Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
