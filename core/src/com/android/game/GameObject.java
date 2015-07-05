@@ -52,11 +52,11 @@ public class GameObject {
     }
 
     void reflectWave(Wave w) {
-        Vector2 pos = position;
+        Vector2 pos = position.cpy().add(position.cpy().sub(w.getPosition()));
         float dir = w.getPosition().cpy().sub(position).angle();
         float ang = 2f * (float) Math.toDegrees(
                 Math.asin(getDiameter() / (2f * w.getRadius())));
-        float rad = w.getRadius() - position.dst(w.getPosition());
+        float rad = w.getRadius();
         float ene = ang / w.getAngle() * w.getEnergy();
         boolean ref = false;
 
