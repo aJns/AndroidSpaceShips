@@ -1,7 +1,10 @@
 package com.android.game;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.ai.steer.limiters.AngularLimiter;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.javafx.geom.transform.BaseTransform;
 
 public class GameObject {
     protected Vector2 position;
@@ -22,10 +25,22 @@ public class GameObject {
                 if (!w.enteredWave(position)) continue;
                 // FIXME sometimes spawns double waves (rare)
 
-                // Left side
-                splitWave(go, w, -1);
-                // Right side
-                splitWave(go, w, 1);
+                if (w.getAngle() == 360f) {
+                    Vector2 pos = w.getPosition();
+                    float dir = w.getPosition().cpy().sub(position).angle();
+                    float ang = 360f - 2f * (float) Math.toDegrees(
+                            Math.asin(getDiameter() / (2f * w.getRadius())));
+                    float rad = w.getRadius();
+                    float ene = ang / w.getAngle() * w.getEnergy();
+                    boolean ref = true;
+
+                    addWave(pos, dir, ang, rad, ene, ref);
+                } else {
+                    // Left side
+                    splitWave(go, w, -1);
+                    // Right side
+                    splitWave(go, w, 1);
+                }
 
                 if (w.getReflective()) {
                     reflectWave(w);
@@ -40,7 +55,7 @@ public class GameObject {
         Vector2 pos = position;
         float dir = w.getPosition().cpy().sub(position).angle();
         float ang = 2f * (float) Math.toDegrees(
-                Math.asin(100f / (2f * w.getRadius())));
+                Math.asin(getDiameter() / (2f * w.getRadius())));
         float rad = w.getRadius() - position.dst(w.getPosition());
         float ene = ang / w.getAngle() * w.getEnergy();
         boolean ref = false;
@@ -51,11 +66,13 @@ public class GameObject {
     void splitWave(GameObject go, Wave w, int side) {
         // Still messy
         Vector2 pos = w.getPosition();
-        float ang = Utils.angleDifference(position.cpy().sub(w.getPosition()).angle(),
-                w.getDirection() + side * w.getAngle() / 2f)
-                - (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())));
+        float a1 = position.cpy().sub(w.getPosition()).angle();
+        float a2 = Utils.angleToRange(
+                w.getDirection() + side * w.getAngle() / 2f);
+        float ang = Utils.angleDifference(a1, a2, side)
+                - (float) Math.toDegrees(Math.asin(getDiameter() / (2f * w.getRadius())));
         float dir = position.cpy().sub(w.getPosition()).angle()
-                + side * (float) Math.toDegrees(Math.asin(100f / (2f * w.getRadius())))
+                + side * (float) Math.toDegrees(Math.asin(getDiameter() / (2f * w.getRadius())))
                 + side * ang / 2f;
         float rad = w.getRadius();
         float ene = ang / w.getAngle() * w.getEnergy();

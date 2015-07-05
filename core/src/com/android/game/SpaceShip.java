@@ -74,7 +74,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean ping() {
-        addWave(getPosition(), 0, 1000, true);
+        addWave(getPosition(), 0, 5000, true);
         return true;
     }
 
