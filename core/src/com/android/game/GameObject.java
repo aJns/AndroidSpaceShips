@@ -32,9 +32,8 @@ public class GameObject {
                             Math.asin(getDiameter() / (2f * w.getRadius())));
                     float rad = w.getRadius();
                     float ene = ang / w.getAngle() * w.getEnergy();
-                    boolean ref = true;
 
-                    addWave(pos, dir, ang, rad, ene, ref);
+                    addWave(pos, dir, ang, rad, ene, true);
                 } else {
                     // Left side
                     splitWave(go, w, -1);
@@ -45,8 +44,7 @@ public class GameObject {
                 if (w.getReflective()) {
                     reflectWave(w);
                 }
-                // Destroys old wave
-                w.setEnergy(0f);
+                w.destroy();
             }
         }
     }
@@ -58,9 +56,8 @@ public class GameObject {
                 Math.asin(getDiameter() / (2f * w.getRadius())));
         float rad = w.getRadius();
         float ene = ang / w.getAngle() * w.getEnergy();
-        boolean ref = false;
 
-        addWave(pos, dir, ang, rad, ene, ref);
+        addWave(pos, dir, ang, rad, ene, false);
     }
 
     void splitWave(GameObject go, Wave w, int side) {
@@ -76,20 +73,19 @@ public class GameObject {
                 + side * ang / 2f;
         float rad = w.getRadius();
         float ene = ang / w.getAngle() * w.getEnergy();
-        boolean ref = true;
 
-        go.addWave(pos, dir, ang, rad, ene, ref);
+        go.addWave(pos, dir, ang, rad, ene, true);
     }
 
     public void addWave(Vector2 position, float radius, float energy,
                         boolean reflective) {
-        waves.add(new Wave(position, radius, energy, reflective));
+        waves.add(new Wave(position, radius, energy, reflective, this));
     }
 
     public void addWave(Vector2 position, float direction, float angle,
                         float radius, float energy, boolean reflective) {
         waves.add(new Wave(position, direction, angle, radius, energy,
-                reflective));
+                reflective, this));
     }
 
     public ArrayList<Wave> getWaves() {

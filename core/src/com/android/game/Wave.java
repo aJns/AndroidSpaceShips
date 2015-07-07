@@ -15,11 +15,11 @@ public class Wave extends GameObject implements Drawable, Updateable {
     private boolean reflective;
     private float speed;
     private float segLength;
+    private GameObject source;
 
     // Circular wave
     public Wave(Vector2 position, float radius, float energy,
-                boolean reflective) {
-        super();
+                boolean reflective, GameObject source) {
         super.position = position.cpy();
         this.angle = 360f;
         this.radius = radius;
@@ -27,12 +27,12 @@ public class Wave extends GameObject implements Drawable, Updateable {
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
         segLength = 10f;
+        this.source = source;
     }
 
     // Arc wave
     public Wave(Vector2 position, float direction, float angle, float radius,
-                float energy, boolean reflective) {
-        super();
+                float energy, boolean reflective, GameObject source) {
         super.position = position.cpy();
         this.direction = direction;
         this.angle = angle;
@@ -41,6 +41,7 @@ public class Wave extends GameObject implements Drawable, Updateable {
         this.reflective = reflective;
         speed = Utils.LIGHT_SPEED;
         segLength = 10f;
+        this.source = source;
     }
 
     public float getRadius() {
@@ -51,9 +52,6 @@ public class Wave extends GameObject implements Drawable, Updateable {
     }
     public float getEnergy() {
         return energy;
-    }
-    public void setEnergy(float energy) {
-        this.energy = energy;
     }
     public float getDirection() {
         return direction;
@@ -101,12 +99,12 @@ public class Wave extends GameObject implements Drawable, Updateable {
         float length = (float) Math.toRadians(angle) * radius;
         int segments = (int) (length / segLength);
         float startAngle = direction - angle / 2f;
-        for (int i = 1; i <= segments; i++) {
+        for (int i = 0; i < segments; i++) {
             float segAngle = angle / (float) segments;
             Vector2 point1 = Utils.circlePoint(getPosition(), radius,
-                    startAngle + segAngle * (i - 1));
-            Vector2 point2 = Utils.circlePoint(getPosition(), radius,
                     startAngle + segAngle * i);
+            Vector2 point2 = Utils.circlePoint(getPosition(), radius,
+                    startAngle + segAngle * (i + 1));
             renderer.line(point1.x, point1.y, point2.x, point2.y);
         }
         renderer.end();
@@ -135,5 +133,9 @@ public class Wave extends GameObject implements Drawable, Updateable {
         }
 
         return false;
+    }
+
+    public void destroy() {
+        energy = 0f;
     }
 }

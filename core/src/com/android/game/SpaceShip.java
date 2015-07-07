@@ -48,12 +48,16 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     @Override
     public void draw(ShapeRenderer renderer) {
         // Limits for turning
-        renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.setColor(Color.RED);
-        float maxAngle = maxTurnAngle();
-        renderer.arc(getPosition().x, getPosition().y, 200f,
-                rotation - maxAngle, 2f * maxAngle);
-        renderer.end();
+//        renderer.begin(ShapeRenderer.ShapeType.Line);
+//        renderer.setColor(Color.RED);
+//        float maxAngle = maxTurnAngle();
+//        renderer.arc(getPosition().x, getPosition().y, 200f,
+//                rotation - maxAngle, 2f * maxAngle);
+//        renderer.end();
+
+//        for (Wave w : getWaves()) {
+//            w.draw(renderer);
+//        }
     }
 
     public float maxTurnAngle() {
