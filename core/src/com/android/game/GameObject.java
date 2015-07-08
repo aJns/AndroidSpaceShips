@@ -2,9 +2,7 @@ package com.android.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.ai.steer.limiters.AngularLimiter;
 import com.badlogic.gdx.math.Vector2;
-import com.sun.javafx.geom.transform.BaseTransform;
 
 public class GameObject {
     protected Vector2 position;

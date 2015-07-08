@@ -25,6 +25,7 @@ public class AssetHandler {
         assetMap.put("action", "img/action.png");
         assetMap.put("attack_order", "img/attack_order.png");
         assetMap.put("placeholder", "img/placeholder.png");
+        assetMap.put("undo", "img/undo.png");
     }
     
     public <T> T getAsset(String assetID) {

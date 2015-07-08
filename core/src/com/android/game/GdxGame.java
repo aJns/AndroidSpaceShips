@@ -43,7 +43,7 @@ public class GdxGame implements ApplicationListener {
         camera = new OrthographicCamera(w, h);
         camera.setToOrtho(true);
 
-        userInterface = new UserInterface(gameState, assHand, w, h);
+        userInterface = new UserInterface(gameState, assHand, player, w, h);
 
         input = new InputHandler(player, camera, gameState, userInterface);
         Gdx.input.setInputProcessor(input);
