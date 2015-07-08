@@ -3,7 +3,6 @@ package com.android.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -78,7 +77,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     @Override
     public boolean ping() {
-        addWave(getPosition(), 0, 5000, true);
+        addWave(getPosition(), 0f, 10000f, true);
         return true;
     }
 

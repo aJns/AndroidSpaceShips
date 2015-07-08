@@ -9,8 +9,20 @@ public class GameObject {
     protected ArrayList<Wave> waves;
     protected float diameter = 100f;
 
+    public ControlEntity getCtrlEntity() {
+        return ctrlEntity;
+    }
+
+    protected ControlEntity ctrlEntity;
+
     public GameObject() {
         waves = new ArrayList<Wave>();
+        this.ctrlEntity = null;
+    }
+
+    public GameObject(ControlEntity ctrlEntity) {
+        waves = new ArrayList<Wave>();
+        this.ctrlEntity = ctrlEntity;
     }
 
     public void checkWaves(ArrayList<GameObject> gameObjects) {
@@ -22,6 +34,10 @@ public class GameObject {
                 Wave w = go.getWaves().get(i);
                 if (!w.enteredWave(position)) continue;
                 // FIXME sometimes spawns double waves (rare)
+
+                if (ctrlEntity != null) {
+                    ctrlEntity.addSighting(go);
+                }
 
                 if (w.getAngle() == 360f) {
                     Vector2 pos = w.getPosition();
@@ -55,7 +71,7 @@ public class GameObject {
         float rad = w.getRadius();
         float ene = ang / w.getAngle() * w.getEnergy();
 
-        addWave(pos, dir, ang, rad, ene, false);
+        addWave(pos, dir, ang, rad, ene, true);
     }
 
     void splitWave(GameObject go, Wave w, int side) {

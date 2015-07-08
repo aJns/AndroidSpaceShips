@@ -6,9 +6,18 @@ import java.util.ArrayList;
 public abstract class ControlEntity {
     // ArrayList<Controllable> subjects; <-- IMO this makes more sense
     private ArrayList<SpaceShip> ships;
+    private ArrayList<GameObject> sightings;
 
     public ControlEntity() {
         ships = new ArrayList<SpaceShip>();
+        sightings = new ArrayList<GameObject>();
+    }
+
+    public void addSighting(GameObject go) {
+        if (sightings.contains(go)) {
+            sightings.remove(go);
+        }
+        sightings.add(go);
     }
 
     public void addShip(SpaceShip ship) {
