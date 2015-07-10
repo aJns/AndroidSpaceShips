@@ -17,16 +17,10 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     private float rotation;
 
     private ArrayList<Command> commands;
-
-<<<<<<< HEAD
-    private SpaceShip(Vector2 position, ControlEntity ctrlEntity) {
-        super(position, ctrlEntity);
-=======
     private ShipWeapon gun;
 
-    private SpaceShip(Vector2 position) {
-        super.position = position;
->>>>>>> 31b38c9904f88d19821e758bf533fbe10a806520
+    private SpaceShip(Vector2 position, ControlEntity ctrlEntity) {
+        super(position, ctrlEntity);
         speed = 2;
         rotation = 0;
 
