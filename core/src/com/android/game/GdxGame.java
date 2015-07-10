@@ -15,7 +15,7 @@ public class GdxGame implements ApplicationListener {
     ShapeRenderer renderer;
     Texture img;
     GameLogic logic;
-    ArrayList<Drawable> visibleObjects;
+    // ArrayList<Drawable> visibleObjects;
     GameState gameState;
     ArtificialIntelligence ai;
     Player player;
@@ -28,13 +28,12 @@ public class GdxGame implements ApplicationListener {
     public void create() {
         batch = new SpriteBatch();
         renderer = new ShapeRenderer();
-        visibleObjects = new ArrayList<Drawable>();
         gameState = new GameState();
         assHand = new AssetHandler();
 
         player = new Player(assHand);
         ai = new ArtificialIntelligence(assHand);
-        logic = new GameLogic(visibleObjects, gameState, player, ai);
+        logic = new GameLogic(gameState, player, ai);
         logic.init();
 
 
@@ -58,9 +57,8 @@ public class GdxGame implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
-        for (Drawable object : visibleObjects) {
-            object.draw(batch, assHand);
-        }
+        player.draw(batch, assHand);
+        ai.draw(batch, assHand);
 
         // Drawing userInterface here so it's on top
         userInterface.draw(batch, assHand);
@@ -68,9 +66,8 @@ public class GdxGame implements ApplicationListener {
         batch.end();
 
         renderer.setProjectionMatrix(camera.combined);
-        for (Drawable object : visibleObjects) {
-            object.draw(renderer);
-        }
+        player.draw(renderer);
+        ai.draw(renderer);
 
         logic.update();
     }

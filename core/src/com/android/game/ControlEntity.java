@@ -2,8 +2,12 @@ package com.android.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
 // A super-class for decision making entities in the game eg. player and ai
-public abstract class ControlEntity {
+// Draws and updates its subjects
+public abstract class ControlEntity implements Drawable, Updateable {
     // ArrayList<Controllable> subjects; <-- IMO this makes more sense
     private ArrayList<SpaceShip> ships;
     private ArrayList<GameObject> sightings;
@@ -30,5 +34,27 @@ public abstract class ControlEntity {
 
     public ArrayList<SpaceShip> getShips() {
         return ships;
+    }
+
+    @Override
+    public void draw(SpriteBatch batch, AssetHandler assHand) {
+        //TODO: draw sightings
+        for (SpaceShip s : ships) {
+            s.draw(batch, assHand);
+        }
+    }
+
+    @Override
+    public void draw(ShapeRenderer renderer) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void update(GameState state) {
+        //TODO: update sightings
+        for (SpaceShip s : ships) {
+            s.update(state);
+        }
     }
 }
