@@ -8,11 +8,6 @@ public class GameObject {
     protected Vector2 position;
     protected ArrayList<Wave> waves;
     protected float diameter = 100f;
-
-    public ControlEntity getCtrlEntity() {
-        return ctrlEntity;
-    }
-
     protected ControlEntity ctrlEntity;
 
     public GameObject() {
@@ -20,8 +15,9 @@ public class GameObject {
         this.ctrlEntity = null;
     }
 
-    public GameObject(ControlEntity ctrlEntity) {
+    public GameObject(Vector2 position, ControlEntity ctrlEntity) {
         waves = new ArrayList<Wave>();
+        this.position = position;
         this.ctrlEntity = ctrlEntity;
     }
 
@@ -47,7 +43,7 @@ public class GameObject {
                     float rad = w.getRadius();
                     float ene = ang / w.getAngle() * w.getEnergy();
 
-                    addWave(pos, dir, ang, rad, ene, true);
+                    go.addWave(pos, dir, ang, rad, ene, true);
                 } else {
                     // Left side
                     splitWave(go, w, -1);

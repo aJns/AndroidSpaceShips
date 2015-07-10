@@ -20,6 +20,10 @@ public abstract class ControlEntity {
         sightings.add(go);
     }
 
+    public ArrayList<GameObject> getSightings() {
+        return sightings;
+    }
+
     public void addShip(SpaceShip ship) {
         ships.add(ship);
     }

@@ -28,7 +28,7 @@ public class GameLogic {
         }
         for (SpaceShip s : ai.getShips()) {
             gameObjects.add(s);
-            visibleObjects.add(s);
+            visibleObjects.add(s);  // Remove when sightings work
             updateableObjects.add(s);
         }
         gameState.plan();
@@ -43,6 +43,10 @@ public class GameLogic {
         }
         for (Updateable u : updateableObjects) {
             u.update(gameState);
+        }
+        for (GameObject go : player.getSightings()) {
+            // TODO: Add sightings to visibleObjects
+//            visibleObjects.add(go);
         }
     }
 }

@@ -18,8 +18,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     private ArrayList<Command> commands;
 
-    private SpaceShip(Vector2 position) {
-        super.position = position;
+    private SpaceShip(Vector2 position, ControlEntity ctrlEntity) {
+        super(position, ctrlEntity);
         speed = 2;
         rotation = 0;
 
@@ -41,7 +41,6 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         for (Wave w : getWaves()) {
             w.draw(batch, assHand);
         }
-
     }
 
     @Override
@@ -152,8 +151,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
             this.imgID = imgID;
             return this;
         }
-        public SpaceShip build(Vector2 position, AssetHandler assHand) {
-            SpaceShip ship = new SpaceShip(position);
+        public SpaceShip build(Vector2 position, ControlEntity ctrlEntity, AssetHandler assHand) {
+            SpaceShip ship = new SpaceShip(position, ctrlEntity);
             Sprite sprite = assHand.getSprite(this.imgID);
             float scale = 0.25f;
             sprite.setScale(scale);
