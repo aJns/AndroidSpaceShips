@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public interface Controllable {
     public boolean ping(); // returns true if successful
     public boolean move(Vector2 destination);
-    public boolean attack();
+    public boolean attack(Vector2 target);
     public Vector2 getPosition();
     public float getRotation();
     public Vector2 getLastPosition();   // Gets the last waypoint position

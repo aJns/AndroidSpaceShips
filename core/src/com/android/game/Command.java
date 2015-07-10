@@ -82,8 +82,7 @@ public class Command implements Drawable {
             }
         }
         if (this.type == CommandType.ATTACK) {
-            System.out.println("Pew pew (Attacking not yet implemented :< )");
-            return true;
+            return subject.attack(this.commandCoordinates());
         }
         if (this.type == CommandType.PING) {
             subject.ping();
