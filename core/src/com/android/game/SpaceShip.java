@@ -18,12 +18,16 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
 
     private ArrayList<Command> commands;
 
+    private ShipWeapon gun;
+
     private SpaceShip(Vector2 position) {
         super.position = position;
         speed = 2;
         rotation = 0;
 
         commands = new ArrayList<Command>();
+
+        gun = new ShipWeapon();
     }
 
     @Override
@@ -37,6 +41,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         float drawX = getPosition().x - (sprite.getWidth() / 2);
         sprite.setPosition(drawX, drawY);
         sprite.draw(batch);
+
+        gun.draw(batch, assHand);
 
         for (Wave w : getWaves()) {
             w.draw(batch, assHand);
@@ -67,6 +73,7 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     public void update(GameState state) {
         if (!state.isAction()) { return; }
         parseCommands();
+        gun.update(state);
         for (Iterator<Wave> iterator = getWaves().iterator(); iterator.hasNext(); ) {
             Wave wave = iterator.next();
             if (wave.energyDensity() < Utils.ENERGY_DENSITY_THRESHOLD) {
@@ -91,9 +98,8 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     }
 
     @Override
-    public boolean attack() {
-        // TODO: Implement attacking
-        return false;
+    public boolean attack(Vector2 target) {
+        return gun.shoot(getPosition(), target);
     }
 
     @Override
