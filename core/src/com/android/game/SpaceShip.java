@@ -12,21 +12,24 @@ import com.badlogic.gdx.math.Vector2;
 
 public class SpaceShip extends GameObject implements Drawable, Updateable, Controllable {
     private Sprite sprite;
+    private Sprite destroyedSprite;
 
     private float speed;
     private float rotation;
 
     private ArrayList<Command> commands;
     private ShipWeapon gun;
+    // private ArrayList<GameObject> gameObjects;
 
-    private SpaceShip(Vector2 position, ControlEntity ctrlEntity) {
+    private SpaceShip(Vector2 position, ControlEntity ctrlEntity,
+            ArrayList<GameObject> gameObjects) {
         super(position, ctrlEntity);
         speed = 2;
         rotation = 0;
 
         commands = new ArrayList<Command>();
 
-        gun = new ShipWeapon();
+        gun = new ShipWeapon(gameObjects, this);
     }
 
     @Override
@@ -149,6 +152,17 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
         return commands.get(commands.size() - 1);
     }
 
+    @Override
+    protected void takeHit() {
+        sprite = destroyedSprite;
+        sprite.setScale(0.25f);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return true;
+    }
+
     public static class Builder {
         private String imgID = null;
 
@@ -157,24 +171,22 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
             return this;
         }
         public SpaceShip build(Vector2 position, ControlEntity ctrlEntity, 
-                AssetHandler assHand) {
+                AssetHandler assHand, ArrayList<GameObject> gameObjects) {
             if (imgID == null) { 
-                int id = Utils.randomInt(1,3);
+                int id = Utils.randomInt(1, 3);
                 StringBuilder strBld = new StringBuilder("spaceship");
                 strBld.append(id);
                 imgID = strBld.toString();
                 System.out.println(imgID);
             }
 
-            SpaceShip ship = new SpaceShip(position, ctrlEntity);
+            SpaceShip ship = new SpaceShip(position, ctrlEntity, gameObjects);
 
             Sprite sprite = assHand.getSprite(this.imgID);
             float scale = 0.25f;
             sprite.setScale(scale);
             ship.sprite = sprite;
-            Rectangle box = sprite.getBoundingRectangle();
-            System.out.println(box.perimeter());
-            System.out.println(box.perimeter());
+            ship.destroyedSprite = assHand.getSprite("explosion");
             return ship;
         }
     }

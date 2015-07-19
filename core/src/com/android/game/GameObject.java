@@ -2,6 +2,7 @@ package com.android.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameObject {
@@ -109,4 +110,16 @@ public class GameObject {
     public float getDiameter() {
         return diameter;
     }
+
+    public void checkProjectile(Projectile bullet) {
+        if (bullet.getShooter() == this) { return; }
+        Circle circle = new Circle(getPosition(), getDiameter());
+        if (circle.contains(bullet.getPosition())) {
+            this.takeHit();
+            bullet.destroy();
+        }
+    }
+
+    // Subclasses should override this function if they want to process hits
+    protected void takeHit() {};
 }

@@ -138,4 +138,9 @@ public class Wave extends GameObject implements Drawable, Updateable {
     public void destroy() {
         energy = 0f;
     }
+
+    @Override
+    public boolean isAlive() {
+        return true;
+    }
 }

@@ -1,15 +1,13 @@
 package com.android.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Player extends ControlEntity {
     //TODO: Add list of selected ships that's used for issuing commands
-    public Player(AssetHandler assHand) {
-        SpaceShip ship = new SpaceShip.Builder()
-            .setSprite("spaceship3")
-            .build(new Vector2(200, 200), this, assHand);
-        addShip(ship);
+    public Player() {
     }
 
     public void input(Vector2 pos, Vector2 origin) {

@@ -11,6 +11,7 @@ public abstract class ControlEntity implements Drawable, Updateable {
     // ArrayList<Controllable> subjects; <-- IMO this makes more sense
     private ArrayList<SpaceShip> ships;
     private ArrayList<GameObject> sightings;
+    protected ArrayList<GameObject> globalGameObjects;
 
     public ControlEntity() {
         ships = new ArrayList<SpaceShip>();
@@ -36,6 +37,10 @@ public abstract class ControlEntity implements Drawable, Updateable {
         return ships;
     }
 
+    public void init(ArrayList<GameObject> globalGameObjects) {
+        this.globalGameObjects = globalGameObjects;
+    }
+
     @Override
     public void draw(SpriteBatch batch, AssetHandler assHand) {
         //TODO: draw sightings
@@ -56,5 +61,10 @@ public abstract class ControlEntity implements Drawable, Updateable {
         for (SpaceShip s : ships) {
             s.update(state);
         }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return true;
     }
 }

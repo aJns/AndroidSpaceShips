@@ -1,7 +1,5 @@
 package com.android.game;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +13,6 @@ public class GdxGame implements ApplicationListener {
     ShapeRenderer renderer;
     Texture img;
     GameLogic logic;
-    // ArrayList<Drawable> visibleObjects;
     GameState gameState;
     ArtificialIntelligence ai;
     Player player;
@@ -31,9 +28,9 @@ public class GdxGame implements ApplicationListener {
         gameState = new GameState();
         assHand = new AssetHandler();
 
-        player = new Player(assHand);
-        ai = new ArtificialIntelligence(assHand);
-        logic = new GameLogic(gameState, player, ai);
+        player = new Player();
+        ai = new ArtificialIntelligence();
+        logic = new GameLogic(gameState, player, ai, assHand);
         logic.init();
 
 
