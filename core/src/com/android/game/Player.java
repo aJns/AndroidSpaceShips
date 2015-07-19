@@ -8,7 +8,7 @@ public class Player extends ControlEntity {
     public Player(AssetHandler assHand) {
         SpaceShip ship = new SpaceShip.Builder()
             .setSprite("spaceship3")
-            .build(new Vector2(200, 200), assHand);
+            .build(new Vector2(200, 200), this, assHand);
         addShip(ship);
     }
 

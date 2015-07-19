@@ -4,17 +4,13 @@ import java.util.ArrayList;
 
 public class GameLogic {
     ArrayList<GameObject> gameObjects;
-    ArrayList<Drawable> visibleObjects;
-    ArrayList<Updateable> updateableObjects;
     Player player;
     ArtificialIntelligence ai;
     GameState gameState;
 
-    public GameLogic(ArrayList<Drawable> visibleObjects, GameState state,
+    public GameLogic(GameState state,
             Player player, ArtificialIntelligence ai) {
         this.gameObjects = new ArrayList<GameObject>();
-        this.visibleObjects = visibleObjects;
-        this.updateableObjects = new ArrayList<Updateable>();
         this.gameState = state;
         this.player = player;
         this.ai = ai;
@@ -23,13 +19,9 @@ public class GameLogic {
     public void init() {
         for (SpaceShip s : player.getShips()) {
             gameObjects.add(s);
-            visibleObjects.add(s);
-            updateableObjects.add(s);
         }
         for (SpaceShip s : ai.getShips()) {
             gameObjects.add(s);
-            visibleObjects.add(s);
-            updateableObjects.add(s);
         }
         gameState.plan();
     }
@@ -41,8 +33,7 @@ public class GameLogic {
             }
             go.checkWaves(gameObjects);
         }
-        for (Updateable u : updateableObjects) {
-            u.update(gameState);
-        }
+        player.update(gameState);
+        ai.update(gameState);
     }
 }
