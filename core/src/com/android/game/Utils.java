@@ -1,8 +1,11 @@
 package com.android.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class Utils {
+    private static Random rand;
     public static final float LIGHT_SPEED = 5f;
     public static final float ENERGY_DENSITY_THRESHOLD = 1f;
 
@@ -51,5 +54,14 @@ public class Utils {
             angle += 360f;
         }
         return angle;
+    }
+
+    public static int randomInt(int min, int max) {
+        if (rand == null) {
+            rand = new Random();
+        }
+        int randomInteger = rand.nextInt((max - min) + 1) + min;
+
+        return randomInteger;
     }
 }

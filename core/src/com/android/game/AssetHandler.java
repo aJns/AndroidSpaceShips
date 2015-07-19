@@ -15,7 +15,7 @@ public class AssetHandler {
 
         // Save all asset paths in a map
         assetMap = new TreeMap<String, String>();
-        assetMap.put("spaceship", "img/spaceship.png");
+        assetMap.put("spaceship1", "img/spaceship.png");
         assetMap.put("spaceship2", "img/spaceship2.png");
         assetMap.put("spaceship3", "img/spaceship3.png");
         assetMap.put("waypoint_connector", "img/waypoint_connector.png");

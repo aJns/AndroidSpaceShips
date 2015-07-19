@@ -147,20 +147,27 @@ public class SpaceShip extends GameObject implements Drawable, Updateable, Contr
     }
 
     public static class Builder {
-        private String imgID = "spaceship";
+        private String imgID = null;
 
         public Builder setSprite(String imgID) {
             this.imgID = imgID;
             return this;
         }
         public SpaceShip build(Vector2 position, AssetHandler assHand) {
+            if (imgID == null) { 
+                int id = Utils.randomInt(1,3);
+                StringBuilder strBld = new StringBuilder("spaceship");
+                strBld.append(id);
+                imgID = strBld.toString();
+                System.out.println(imgID);
+            }
+
             SpaceShip ship = new SpaceShip(position);
             Sprite sprite = assHand.getSprite(this.imgID);
             float scale = 0.25f;
             sprite.setScale(scale);
             ship.sprite = sprite;
             Rectangle box = sprite.getBoundingRectangle();
-            // ship.diameter = box.perimeter();
             System.out.println(box.perimeter());
             System.out.println(box.perimeter());
             return ship;
