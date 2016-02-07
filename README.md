@@ -10,3 +10,4 @@ gradle run
 # gitinspector
 The root directory also contains the file gitinspector_info.html, which details
 project responsibilities and other repository information.
+(nikulaj and aJns are the same user)
