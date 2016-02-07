@@ -3,10 +3,10 @@ A simple Android game that I worked on with a friend during the summer of 2015.
 
 It uses the Gradle build tool and libGdx game library, and also works on a pc.
 The easiest way to try it out is to go to the project root directory and type
-'''bash
-cd desktop
-gradle run
-'''
+```bash
+$ cd desktop
+$ gradle run
+```
 
 # Gameplay
 The game starts in the "planning mode". Your ship is the left one. You can set
